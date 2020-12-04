@@ -1,4 +1,5 @@
-*.json
-*.html
+.json
+.html
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+*/.ipynb_checkpoints/*.ipynb
