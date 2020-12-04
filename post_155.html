@@ -1,0 +1,357 @@
+<h1>10 강 가상 메모리</h1>
+<p>출처</p>
+<p><a href="https://www.youtube.com/watch?v=xLovOdiRtjI&amp;list=PLBrGAFAIyf5rby7QylRc6JxU5lzQ9c4tN&amp;index=34" target="_blank" rel="noopener">www.youtube.com/watch?v=xLovOdiRtjI&amp;list=PLBrGAFAIyf5rby7QylRc6JxU5lzQ9c4tN&amp;index=34</a></p>
+<figure data-ke-type="video" data-ke-style="alignCenter" data-video-host="youtube" data-video-url="https://www.youtube.com/watch?v=xLovOdiRtjI&amp;list=PLBrGAFAIyf5rby7QylRc6JxU5lzQ9c4tN&amp;index=34" data-video-thumbnail="https://scrap.kakaocdn.net/dn/biP7Et/hyH022wIRd/G7BTPtuGy4wuJgkzoP50Kk/img.jpg?width=640&amp;height=480&amp;face=0_0_640_480" data-video-width="640" data-video-height="480" data-video-origin-width="640" data-video-origin-height="480" data-ke-mobilestyle="widthContent"><iframe src="https://www.youtube.com/embed/xLovOdiRtjI" width="640" height="480" frameborder="0" allowfullscreen="true"></iframe>
+<figcaption></figcaption>
+</figure>
+<h2>virtual memory</h2>
+<ul>
+<li>
+<p>가상 메모리</p>
+<p>non-continuous allocation - 프로그램을 블럭 으로 분할하여 적재/실행</p>
+<p>paging/segmentation system</p>
+</li>
+<li>
+<p>가상 메모리 관리 목적</p>
+<p>가상 메모리 시스템 성능 최적화</p>
+</li>
+</ul>
+<p>성능의 지표</p>
+<ol>
+<li>
+<p>cost model</p>
+</li>
+<li>
+<p>다양한 최적화 기법</p>
+</li>
+</ol>
+<h2>가상 메모리에서 Cost model</h2>
+<ol>
+<li>
+<p>Page fault frequency -빈도</p>
+</li>
+<li>
+<p>Page fault rate - 발생률</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>page fault rate 를 최소화 할 수 있도록 전략들을 설계해야 함.</p>
+<p>page fault 가 발생하면 프로세스가 block 상태가 된다. = 스위칭</p>
+<p>context switch 및 kernel 개입 최소화가 필요</p>
+</li>
+</ul>
+<h2>cost model 에서 용어</h2>
+<ul>
+<li>
+<p>page reference string (d)</p>
+<p>프로세스의 수행 중 참조한 페이지 번호 순서</p>
+<p>어떤 페이지를 읽었는지 기록을 할 필요가 있다. 평가하기 위해.</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@RPsEU/btqLWIfpe6C/btDCHf19n30GoMydUYN4u0/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<ul>
+<li>page fault rate = F(w)</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@cgTtJ7/btqLSOgl4A3/EyHcniuKO4jIkIMKIxKJw1/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<p>전체 fault 횟수를 전체 참조한 횟수로 나눈 값.</p>
+<h2>Hardware Components</h2>
+<ul>
+<li>
+<p>Address translation device - 주소 사상 장치</p>
+<p>주소 매핑을 효율적으로 수행하기 위해 사용</p>
+<p>ex) TLB (associated memories), dedicated page-tabel register, 캐시 메모리 등</p>
+</li>
+<li>
+<p>Bit Vectors</p>
+<p>페이지 사용 상황에 대한 정보를 기록하는 비트들</p>
+<p>새로운 페이지가 왔을 떄 어느 블럭에 넣어줄지 선택에 사용한다. 효율적으로 사용하기 위함.</p>
+<p>reference bits (used bit) - 참조 비트. 참조되었는가?</p>
+<p>update bits (moditied bits, dirty bits-중요) - 갱신 비트. 갱신되었는가?</p>
+</li>
+</ul>
+<h2>Bit Vectors</h2>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@btMZw6/btqLVaXw1pg/8vHVLHdE1eIWgbz8uxLC7K/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>bit vectors - reference bit vector</h2>
+<ul>
+<li>
+<p>메모리에 적재된 각각의 페이지가 최근에 참조되었는지를 표시. 기록</p>
+</li>
+<li>
+<p>운영 - 주기적으로 모든 비트를 0 으로 초기화, 프로세스에 의해 참조되면 페이지의 비트를 1 로 설정</p>
+</li>
+<li>
+<p>이 비트를 확인함으로서 최근에 참조된 페이지들을 확인 가능 - 지역성과 연관?</p>
+</li>
+</ul>
+<h2>bit vectors - update bit vector</h2>
+<ul>
+<li>
+<p>page 가 메모리에 적재된 후 프로세스에 의해 수정되었는지 표시</p>
+</li>
+<li>
+<p>주기적 초기화가 없다.</p>
+</li>
+<li>
+<p>메모리에 적재된 메모리 페이지는 프로세스에 의해 변경되면 swap device 에 바로 적용 안됨.</p>
+</li>
+<li>
+<p>그래서 swap device 에 write back 해줘야한다. 그래서 메인 메모리에서 나올 떄 초기화 한다.</p>
+</li>
+</ul>
+<h2>Software components</h2>
+<ul>
+<li>가상 메모리 성능 향상을 위한 관리 기법들. 전략</li>
+</ul>
+<ol>
+<li>
+<p>allocation</p>
+</li>
+<li>
+<p>fetch</p>
+</li>
+<li>
+<p>placement</p>
+</li>
+<li>
+<p>replacement</p>
+</li>
+<li>
+<p>cleaning</p>
+</li>
+<li>
+<p>load control</p>
+</li>
+</ol>
+<h2>Allocation stratetgies</h2>
+<ul>
+<li>각 프로세스에게 메모리를 얼마만큼 줄 것인가?</li>
+</ul>
+<ol>
+<li>
+<p>Fixed allocation - 고정 할당</p>
+<p>프로세스의 실행 동안 고정된 크기의 메모리 할당.</p>
+<p>page 시스템에선 page 수를 정해주는 것이라 생각</p>
+</li>
+<li>
+<p>variable allocation - 가변 할당</p>
+<p>프로세스 실행 동안 할당하는 메모리의 크기가 유동적.</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>고려사항</p>
+<p>프로세스 실행에 필요한 메모리 양을 예측해야 함. 적당히 줘야 함.</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>너무 큰 메모리 할당</p>
+<p>메모리가 낭비 됨</p>
+</li>
+<li>
+<p>너무 적은 메모리 할당</p>
+<p>시스템 성능 저하</p>
+<p>page fault rate 가 커진다.</p>
+</li>
+</ol>
+<h2>Fetch strategies - fetch 는 가져온다 의 의미</h2>
+<ul>
+<li>특정 page 를 메모리에 언제 적재할 것인가?</li>
+</ul>
+<ol>
+<li>
+<p>demand fetch (demand paging)</p>
+<p>프로세스가 참조하는 페이지들만 적재</p>
+</li>
+</ol>
+<p>page fault overhead 가 있다.</p>
+<ol start="2">
+<li>
+<p>anticipatory fetch (pre-paging)</p>
+<p>참조될 가능성이 높은 page 예측</p>
+<p>가까운 미래에 참조될 가능성이 높은 page 를 미리 적재</p>
+<p>예측 성공 시 page fault 오버헤드가 없음.</p>
+<p>하지만 prediction 오버헤드 (커널의 개입), hit ratio 에 민감함.</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>실제 대부분은 demand fetch 기법 사용.</p>
+<p>일반적으로 좋은 성능.</p>
+<p>pre paging 은 에측 실패시 자원낭비가 크다.</p>
+<p>하지만 프로그래머 입장에선 예측형 가상메모리를 만들어 효율성을 높일 수 있다.</p>
+</li>
+</ul>
+<h2>Placement Strategies</h2>
+<ul>
+<li>
+<p>page/segment 를 어디에 적재할 것인가?</p>
+</li>
+<li>
+<p>paging system 에선 불필요.</p>
+</li>
+<li>
+<p>segmentation system 에서 배치 기법에서와 같다.</p>
+</li>
+</ul>
+<p>first fit</p>
+<p>best fit</p>
+<p>worst fit</p>
+<p>next fit</p>
+<h2>Replacement Strategies</h2>
+<ul>
+<li>새로운 페이지를 어떤 페이지와 교체할 것인가? - 빈 페이지 프레임이 없는 경우</li>
+</ul>
+<ol>
+<li>
+<p>Fixed 할당을 위한 교체 기법</p>
+</li>
+<li>
+<p>Variable 할당을 위한 교체 기법</p>
+</li>
+</ol>
+<h2>Cleaning Strategies</h2>
+<ul>
+<li>
+<p>변경 된 페이지를 언제 write-back 할 것인가?</p>
+<p>dirty bit 의 변경된 내용을 swap device 에 반용. 초기화</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>demand cleaning</p>
+<p>해당 페이지가 메모리에서 나올 때 write back</p>
+</li>
+<li>
+<p>anticipatory cleaning (pre-cleaning)</p>
+<p>더 이상 변경될 가능성이 없다고 판단할 때 미리 write back</p>
+<p>page 교체 시 발생하는 write back 시간 절약</p>
+<p>write vack 이후 페이지 내용이 수정되면 오버헤드.</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>실제 대부분은 demand cleaning 기법 사용</p>
+<p>예측 실패시 오버헤드가 크다.</p>
+</li>
+</ul>
+<h2>Load Control lStrategies - 부하 조절</h2>
+<ul>
+<li>
+<p>시스템의 멀티 프로그래밍 degree 조절 - 시스템에 들어온 프로세스의 수.</p>
+<p>allocation 전략과 연계 된다.</p>
+</li>
+<li>
+<p>적정 수준의 멀티 프로그래밍 degree 를 유지해야 함.</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>plateau (고원) 영역으로 유지</p>
+</li>
+<li>
+<p>저부하 상태</p>
+<p>under loaded</p>
+<p>시스템 자원 낭비</p>
+<p>성능 저하</p>
+</li>
+<li>
+<p>고부하 상태</p>
+<p>over loaded</p>
+<p>자원에 대한 경쟁 심화</p>
+<p>성능 저하</p>
+<p>thrasing 현상 - 과도한 page fault 발생</p>
+<p>throughput 은 처리량.</p>
+</li>
+</ol>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@bXBBuK/btqLRkNE2G7/CGg2dv346wZ6jYwkkXaw7k/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>메모리 관리를 위한 Replacement - 교체 기법 자세히</h2>
+<p>지역성이 중요하다. 지역성을 이용해 효율적으로 메모리 블럭을 효율적으로 교체</p>
+<ul>
+<li>
+<p>Fixed allocation</p>
+</li>
+<li>
+<p>Variable allocation</p>
+</li>
+</ul>
+<h2>Fixed allocation - Min algorithm (OPT algorithm)</h2>
+<ul>
+<li>
+<p>minimize page fault frequency</p>
+<p>proved 된 알고리즘</p>
+<p>optimal 솔루션임.</p>
+</li>
+<li>
+<p>기법</p>
+<p>앞으로 가장 오랫동안 참조되지 않을 페이지 교체.</p>
+</li>
+<li>
+<p>문제점</p>
+<p>실현 불가능한 기법이다.</p>
+<p>page reference string 을 미리 알고 있어야 한다.. 미래를 알고 있어야 한다.</p>
+</li>
+<li>
+<p>사실상 교체 시법의 성능 평가 도구로 사용된다.</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@bhl2lJ/btqLW9qjLwx/OpoaidiV6Lk6kX9xqkfRsk/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@y5Myu/btqLTykaDUk/AF3IhUZl6Y566xvDDWd6kK/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>Random 알고리즘</h2>
+<ul>
+<li>
+<p>무작위로 교체할 페이지 선택</p>
+</li>
+<li>
+<p>오버헤드가 낮다</p>
+</li>
+<li>
+<p>또 다른 성능 평가로 사용 가능</p>
+</li>
+</ul>
+<h2>FIFO 알고리즘</h2>
+<ul>
+<li>
+<p>가장 오래된 페이지를 교체</p>
+</li>
+<li>
+<p>페이지가 적재된 시간을 기억하고 있어야 함.</p>
+</li>
+<li>
+<p>하지만 지역성에 대한 고려가 없어서 자주 사용되는 페이지가 교체될 가능성이 있다.</p>
+</li>
+<li>
+<p>FIFO anomaly</p>
+</li>
+</ul>
+<p>메모리(페이지)를 더 줘도 page fault 가 더 많이 발생하는 경우. -지역성을 고려안해서.</p>
+<h2>LRU 알고리즘 - Least Recently Used</h2>
+<ul>
+<li>
+<p>가장 오랫동안 참조되지 않은 페이지를 교체한다.</p>
+</li>
+<li>
+<p>하지만 page 참조 시 마다 시간을 기록해야 한다.</p>
+</li>
+<li>
+<p>지역성에 기반을 둔 교체 기법</p>
+</li>
+<li>
+<p>MIN 알고리즘과 근접한 성능</p>
+</li>
+<li>
+<p>실제로 가장 많이 사용하는 교체 기법</p>
+</li>
+</ul>
+<h2>LRU 알고리즘 단점</h2>
+<ul>
+<li>참조 시 마다 시간을 기록해야함 - 오버헤드가 있다.</li>
+</ul>
+<p>간소화된 정보수집 (순서만) 등으로 해소 가능</p>
+<ul>
+<li>
+<p>loop 실행에 필요한 크기보다 작은 수의 page frame 이 할당된 경우, page fault 급격히 증가함. (매벌 fault 발생)</p>
+<p>allocation 기법에서 해결 해야한다.</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@doRSF1/btqLTx6y1cL/eY6BFXtp3oV5dvjMJ54r60/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>

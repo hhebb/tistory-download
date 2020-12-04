@@ -1,0 +1,452 @@
+<h1>가상 메모리</h1>
+<h2>virtual stroage</h2>
+<ul>
+<li>
+<p>non continuouss allocation</p>
+</li>
+<li>
+<p>사용자 프로그램을 여러개의 블럭으로 분할</p>
+</li>
+<li>
+<p>실행 시 필요한 블럭만 메모리에 적재. - 나머지 블럭들은 swap device 에 존재한다.</p>
+</li>
+<li>
+<p>swap device 가 가상메모리라고 생각한다.</p>
+</li>
+</ul>
+<h2>Adress Mapping</h2>
+<ul>
+<li>
+<p>비연속 할당에서</p>
+<p>virtual address (가상 주소)</p>
+<p>상대적인 주소</p>
+<p>논리적 주소</p>
+<p>연속된 메모리 할당을 가정한 주소. - 연속이라고 가정하는것이 강력한 장점이다?</p>
+<p>실제로는 조각으로 나뉘어서 올라단다.</p>
+<p>real address (실제 주소) - 실제 메모리에 적재되는 주소</p>
+</li>
+<li>
+<p>adress mapping 은 virtual --&gt; real address</p>
+</li>
+</ul>
+<h2>block mapping</h2>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@cipACo/btqLTybXWWA/FTIrUP9dF5aKwoDADbUcQk/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<ul>
+<li>
+<p>사용자 프로그램을 블럭 단위로 분할되어서 관리</p>
+</li>
+<li>
+<p>virtual address</p>
+</li>
+</ul>
+<pre class="properties"><code>V = (b, d)
+
+b - 블럭 넘버
+
+d - 오프셋 위치</code></pre>
+<h2>BMT (block map table)</h2>
+<ul>
+<li>
+<p>adress mapping 정보 관리</p>
+</li>
+<li>
+<p>커널 안에 프로세스마다 하나씩 있다.</p>
+</li>
+<li>
+<p>reisdence bit 로 블럭이 메모리에 적재 되었는지 여부를 나타냄</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://kage.tistory.com/image/D7" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>블럭 매핑 과정</h2>
+<ol>
+<li>
+<p>프로세스 BMT 접근</p>
+</li>
+<li>
+<p>BMT 에서 블럭 b 에 대한 항목을 찾음</p>
+</li>
+<li>
+<p>residence bit 검사 - 0 이면 swap device 에서 가져옴. 1 이면 실제 주소 확인</p>
+</li>
+<li>
+<p>실제 주소 r 계산</p>
+</li>
+<li>
+<p>r 을 이용해 메모리에 접근</p>
+</li>
+</ol>
+<h2>Paging System</h2>
+<ul>
+<li>
+<p>프로그램을 같은 크기의 블럭으로 분할 - page</p>
+<p>나머지는 역시 swap device 에 존재</p>
+</li>
+<li>
+<p>page - 프로그램의 분할된 블럭</p>
+</li>
+<li>
+<p>page frame - 메모리의 분할 영역, page 와 같은 크기로 분할</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@taS82/btqLSOTDCZs/FzodnoGWy8eTSyiGfJFSdK/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>Paging System 특징</h2>
+<ul>
+<li>
+<p>논리적 분할이 아니라 크기에 따른 분할</p>
+<p>page 공유 및 보호 과정이 segmentation 에 비해 복잡함.</p>
+</li>
+<li>
+<p>Simple and Efficient</p>
+</li>
+<li>
+<p>No external fragmentation<br />같은 크기로 나뉘어져있으므로 딱맞게 들어간다.<br />internal fragmentation 발생 가능 - 마지막 조각이 작을 때, 내부 단편화 발생 가능.</p>
+</li>
+</ul>
+<h2>페이징 시스템 in 윈도우</h2>
+<ul>
+<li>드라이브를 바꿔서 가상 메모리를 설정해주면 메모리 성능이 올라갈 수 있다.</li>
+</ul>
+<h2>Address Mapping</h2>
+<p>블럭 맵핑과 유사</p>
+<ul>
+<li>
+<p>virtual address - V = (p, d)</p>
+<p>p - 페이지 넘버</p>
+<p>d - 오프셋 위치</p>
+</li>
+<li>
+<p>adress mapping</p>
+<p>pmt (page map table) 사용</p>
+</li>
+<li>
+<p>adress mapping mechanism</p>
+<p>직접 사상</p>
+<p>연관 사상</p>
+<p>하이브리드</p>
+</li>
+</ul>
+<h2>Direct mapping</h2>
+<ul>
+<li>
+<p>가정</p>
+<p>PMT 를 커널 안에 저장</p>
+<p>entrySize - 엔트리 사이즈 (테이블 한 칸의 크기)</p>
+<p>pageSize - 페이지 사이즈</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@duSK30/btqLRj0XQtJ/KC5retZ6FpWMct05NDZ6ek/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>direct mapping 과정</h2>
+<ol>
+<li>
+<p>해당 프로세스의 PMT 저장된 주소 b 에 접근</p>
+</li>
+<li>
+<p>해당 PMT 에서 page p 에 대한 엔트리 찾는다.</p>
+</li>
+<li>
+<p>찾은 엔트리의 residence 비트 검사<br />0 이면 <code>page fault</code>, swap device 에서 해당 page 를 메모리로 적재<br />컨텍스트 스위칭이 일어나므로 page fault 는 오버헤드가 크다.</p>
+</li>
+<li>
+<p>p' 과 가상 주소의 변위 d 를 상요해 실제 주소 r 형성</p>
+</li>
+<li>
+<p>실제 주소 r 로 메인 메모리에 접근</p>
+</li>
+</ol>
+<h2>direct mapping 문제점</h2>
+<ul>
+<li>문제점</li>
+</ul>
+<ol>
+<li>
+<p>메모리 접근 횟수가 2 배 - 커널의 테이블에 접근이 추가됨.</p>
+<p>성능 저하</p>
+</li>
+<li>
+<p>PMT 를 위한 메모리 필요</p>
+</li>
+</ol>
+<h2>Associative Mapping</h2>
+<ul>
+<li>
+<p>TLB (translation look-aside buffer) 에 PMT 를 적재한다.</p>
+<p>PMT 를 위한 전용 하드웨어.</p>
+<p>빠르게 병렬적으로 테이블을 탐색한다.</p>
+<p>메모리 접근을 줄인다.</p>
+<p>오버헤드가 적고 속도가 빠르다.</p>
+<p>하지만 비싸다.. 그래서 작다.</p>
+<p>Hybrid Direct/Associative mapping</p>
+</li>
+<li>
+<p>두 기법을 혼합항 사용</p>
+<p>hw 비용은 줄이고 associative 장점 활용</p>
+</li>
+<li>
+<p>작은 크기 TLB 사용</p>
+<p>PMT : 메모리(커널) 에 저장</p>
+<p>TLB : PMT 중 일부 엔트리 들을 적재 - 최근 사용된 페이지들에 대한 엔트리 저장.</p>
+<p>이는 지역성을 활용한다!</p>
+<p>Hybrid 매핑 과정</p>
+<ol>
+<li>
+<p>TLB 에 적재되어 있는 경우 - residence bit 검사하고 page frame 번호 확인</p>
+</li>
+<li>
+<p>TLB 에 적재되어 있지 않은 경우 - direct mapping 으로 page frame 확인하고 해당 PMT 엔트리를 TLB 에 적재</p>
+</li>
+</ol>
+</li>
+<li>
+<p>PMT 가 TLB 에 적재 되었는지 확인</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@wPfjo/btqLRjGCg0a/aDrPhA7wfKdEayaYSVbzek/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>페이징 시스템 메모리 관리</h2>
+<ul>
+<li>
+<p>Page 와 같은 크리고 미리 분할하여 관리/사용</p>
+<p>메모리 관리를 이한 page frame 자료구조가 필요함.</p>
+<p>FPM 기법과 유사하다.</p>
+</li>
+<li>
+<p>frame table</p>
+<p>page frame 당 하나의 엔트리</p>
+<p>구성 - allocated/available field, PID field, Link field, AV</p>
+<p>Frame table</p>
+</li>
+<li>
+<p>AV 가 돌면서 link 에 연결 리스트 처럼 붙인다.</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@JCCJL/btqLSOzpMYX/OUtpN1Svf76S5Dyyp0rlik/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>page Sharing</h2>
+<ul>
+<li>
+<p>여러 프로세스가 특정 page 를 공유 가능</p>
+<p>같은 루틴을 여러 프로세스에서 사용할 때 공유하는 것이 효율적임.</p>
+<p>비연속 할당이므로 가능하다.</p>
+</li>
+<li>
+<p>공유 가능 page</p>
+<p>procedure pages - 순수한 코드</p>
+<p>Data page - 읽기 전용, 읽기/쓰기 등 데이터</p>
+</li>
+</ul>
+<h2>예시</h2>
+<p>하나의 프로그램을 동시에 사용할 때</p>
+<p>코드 등의 프로시져는 공유할 수 있다.</p>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@bpc7Rj/btqLIHbeeDR/fk563kC7NYsinI2shGsS50/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>Procedure Page Sharing - 문제점과 해결</h2>
+<ul>
+<li>
+<p>프로세스들의 PMT 에 엔트리가 다를 때, 실제 메모리 주소가 달라질 수 있다.</p>
+</li>
+<li>
+<p>PMT 엔트리를 통일시켜서 해결한다.</p>
+</li>
+</ul>
+<h2>Page Protection</h2>
+<ul>
+<li>
+<p>여러 프로세스가 page 를 공유할 때 권한 등을 나눈다.</p>
+</li>
+<li>
+<p>protection bit 사용.</p>
+</li>
+</ul>
+<h2>페이징 시스템 정리</h2>
+<ul>
+<li>
+<p>프로그램을 고정된 크기의 블럭으로 분할(page) / 메모리를 블럭 사이즈로 미리 분할(page frame)</p>
+<p>외부 단편화 문제 없음</p>
+<p>메모리 통합/압축 불필요</p>
+<p>프로그램의 논리적 구조를 고려하지 않고 사이즈를 고려. - share 와 protection 이 복잡함!</p>
+</li>
+<li>
+<p>필요한 page 만 page frame 에 적재하여 사용</p>
+<p>메모리의 효율적 활용</p>
+</li>
+<li>
+<p>page mapping ovrehead</p>
+<p>메모리 공간 및 추가적인 메모리 접근이 필요 - 커널의 테이블 한번 더 참조</p>
+<p>전용 hw 활용으로 해결 - TLB. 비쌈..</p>
+</li>
+</ul>
+<h2>Segmentation System</h2>
+<ul>
+<li>
+<p>프로그램을 논리적 블럭(segment)으로 분할한다.</p>
+<p>블럭의 크기가 서로 다를 수 있음!!</p>
+<p>스택, 힙, 메인 프로시져 등등으로</p>
+</li>
+<li>
+<p>특징</p>
+<p>미리 잘라놓지 않는다. - VPM 과 유사하다.</p>
+<p>segment sharing/protection 이 용이하다. - 논리적 블럭이므로</p>
+<p>adress mapping 및 메모리 관리 오버헤드가 크다.</p>
+<p>no internal fragmentatoin - 외부 단편화는 발생할 수 있다.</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@cYtEy8/btqLJU9b09s/0Hhse5G10jkKEGeNpHVq9k/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>segmentation 주소 매핑</h2>
+<ul>
+<li>
+<p>adress mapping</p>
+<p>virtual address - V = (s, d)</p>
+<p>segment map table (SMT) 사용</p>
+<p>페이징 시스템과 유사하지만 세그먼트 길이, protection bit 가 추가된다.</p>
+<p>세그먼트는 논리적 단위로 나누므로 권한 설정(protection)도 용이하다.</p>
+</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@boM5rm/btqLLHoiQbO/FcvloGoCxY2vKBQAu4jm0K/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>세그먼트 시스템 주소 매핑 과정</h2>
+<ol>
+<li>
+<p>프로세스의 SMT 가 저장되어 있는 주소 b 에 접근</p>
+</li>
+<li>
+<p>SMT 에서 segment s 의 엔트리 찾음</p>
+</li>
+<li>
+<p>찾은 엔트리에 대해 다음 실행</p>
+<p>존재 비트 0 이면 - segment fault, swap device 로부터 해당 segment 를 메모리로 적재, SMT 갱신</p>
+<p>변위 d 가 segment 길이보더 크면 segment overflow 예외</p>
+<p>허가되지 않은 연산일 경우 segment protecction 예외</p>
+<p>다 정상이면 아래로 이동</p>
+</li>
+<li>
+<p>실제 주소 r 계산</p>
+</li>
+<li>
+<p>r 로 메모리 접근</p>
+</li>
+</ol>
+<h2>세그멘테이션 메모리 관리</h2>
+<p>매핑을 했으니 메모리 관리를 한다.</p>
+<ul>
+<li>
+<p>VPM 과 유사함.</p>
+<p>segment 적재 시, 크기에 맞추어 분할 후 적재</p>
+</li>
+<li>
+<p>segment sharing/protection 이 용이하다.</p>
+<p>논리적 분할이므로.</p>
+<p>SMP 에 보호비트를 적어놓으므로 권한 관리도 용이</p>
+</li>
+</ul>
+<h2>세그먼테이션 요약</h2>
+<ul>
+<li>
+<p>프로그램을 논리 단위로 분할(segment)/메모리를 동적으로 분할</p>
+<p>내부 단편화 문제 없음</p>
+<p>세그먼트 겅유/보호 용이함</p>
+<p>페이징 시스템 대비 관리 오버헤드가 크다. - 유동적이므로</p>
+</li>
+<li>
+<p>필요한 segment 만 메모리에 적재하여 사용</p>
+<p>메모리의 효율적 활용 - 비연속 할당이므로 페이징 시스템과 공통적임</p>
+</li>
+<li>
+<p>segment mapping overhead</p>
+<p>커널에 있는 테이블에 접근해야하므로 오버헤드가 있다.</p>
+<p>전용 hw 활용으로 해결 가능하다.</p>
+</li>
+</ul>
+<h2>paging vs segmentation</h2>
+<ul>
+<li>
+<p>페이징<br />단순, 오버헤드 적음</p>
+<p>논리적 구분이 아니라 공유나 보호가 복잡함.</p>
+</li>
+<li>
+<p>세그멘테이션</p>
+<p>복잡해서 관리 오버헤드가 크다.</p>
+<p>논리적 분할이라서 공유나 보호가 쉬움.</p>
+</li>
+</ul>
+<h2>Hybrid paging/segmentation system</h2>
+<ul>
+<li>
+<p>페이징과 세그멘테이션의 장점을 결합</p>
+</li>
+<li>
+<p>프로그램 분할</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>논리 단위의 segment 분할</p>
+</li>
+<li>
+<p>각 segment 를 고정된 크기의 apge 들로 분할</p>
+</li>
+</ol>
+<ul>
+<li>page 단위로 메모리에 적재!</li>
+</ul>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@cfleCe/btqLRVldNqu/qInjdZucalixEyGaeEtPA0/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>Adress mapping</h2>
+<ul>
+<li>
+<p>virtual adrss - V = (s, p, d)</p>
+<p>s - 세그먼트 넘버</p>
+<p>p - 페이지 넘버</p>
+<p>d - 오프셋</p>
+</li>
+<li>
+<p>SMT, PMT 모두 사용</p>
+<p>각 프로세스 마다 하나의 SMT</p>
+<p>각 세그먼트 마다 하나의 PMT</p>
+</li>
+<li>
+<p>Adress mapping</p>
+<p>direct, associated 등</p>
+</li>
+<li>
+<p>메모리 관리</p>
+<p>FPM 과 유사 - page 가 실제 메모리에 적재되므로.</p>
+</li>
+</ul>
+<h2>메커니즘</h2>
+<ul>
+<li>
+<p>SMT 에는 residence 비트 필드 없다.</p>
+<p>실제 메모리에 적재가 안되므로</p>
+<p>대신 PMT 를 참조하는 필드가 추가된다.</p>
+</li>
+<li>
+<p>PMT 는 residence 비트 필드가 있다.</p>
+</li>
+</ul>
+<h2>하이브리드 페이징/세그먼테이션 과정</h2>
+<p><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@s1qv4/btqLJV1lbtZ/blJ7yHPBaTeKKAKMc9riP1/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div><div class="imageblock dual" style="text-align: center;"><table cellspacing="5" cellpadding="0" border="0" style="margin: 0 auto;"><tr><td><img src="http://cfs.tistory.com/attach/4204798/kage@dqZsIv/btqLNr6vlUZ/uvx5K6EsKrs5AVVuYv3n0K/img.png" ><p class="cap1">data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"</p></td><td><a href="https://weflug.tistory.com/attachment/"><img src="https://t1.daumcdn.net/tistory_admin/assets/blog/20201203185817/blogs/image/extension/unknown.gif?_version_=20201203185817" alt="" style="vertical-align: middle;" /> invalid-file</a></td></tr></table></div></p>
+<h2>하이브리드 시스템 요약</h2>
+<ul>
+<li>
+<p>논리적 분할과 고정 크기 분할을 결합</p>
+<p>page sharing/protection 이 쉬움 - 논리적 분할이므로</p>
+<p>메모리 할당/관리 오버헤드 적음 - 실제 적재된 메모리는 page 이므로 단순하니까.</p>
+<p>no external fragmentation - 내부 단편화 발생가능</p>
+</li>
+<li>
+<p>전체 테이블의 수가 증가</p>
+<p>메모리 소모 크다.</p>
+<p>주소 매핑 과정이 복잡</p>
+</li>
+<li>
+<p>direct mapping 이 발생하면 메모리 접근이 3 배가 된다.</p>
+<p>성능이 저하될 수 있다.</p>
+</li>
+</ul>
+<h2>OS 배우는 이유</h2>
+<ul>
+<li>
+<p>프로그램은 작은 OS 라고 인식해야 한다.</p>
+</li>
+<li>
+<p>프로그램에 맞게 효율적으로 개발할 수 있다.</p>
+</li>
+<li>
+<p>메모리, 프로세서 관리 등 OS 지식이 필수다.</p>
+</li>
+</ul>

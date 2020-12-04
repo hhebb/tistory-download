@@ -1,0 +1,7 @@
+{
+    "client_id": "81350227a62289b0d4d88c323dade4f9",
+    "redirect_uri":"http://localhost",
+    "response_type":"code",
+    "state":"",
+    "client_secret":"81350227a62289b0d4d88c323dade4f9ff1914d5756ad183f8d8a93d500c9e399739900e"
+}

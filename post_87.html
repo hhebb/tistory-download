@@ -1,0 +1,56 @@
+<h1>기초 정렬 참고</h1>
+<p>몇 차례 공부를 했었지만 결국 내용을 잊어버리게 된다.<br />의미를 기억하고 코드를 외워보기도 했지만 잊어버린다.<br />알고리즘이란건 시간의 흐름에 따라 절차적으로 진행되는 것이라서 그 과정자체를 기억해야 한다.<br />정지된 문자가 아닌 최소한의 알고리즘이 동작하는 과정.</p>
+<p>바로 생각나지 않으면 그냥 여기에 들어가서 동작 과정을 보면 된다.</p>
+<p>&nbsp;</p>
+<figure id="og_1602398086421" contenteditable="false" data-ke-type="opengraph" data-og-type="website" data-og-title="VisuAlgo - Sorting (Bubble, Selection, Insertion, Merge, Quick, Counting, Radix)" data-og-description="VisuAlgo is free of charge for Computer Science community on earth. If you like VisuAlgo, the only payment that we ask of you is for you to tell the existence of VisuAlgo to other Computer Science students/instructors that you know =) via Facebook, Twitter" data-og-host="visualgo.net" data-og-source-url="https://visualgo.net/ko/sorting" data-og-url="https://visualgo.net/ko/sorting" data-og-image="https://scrap.kakaocdn.net/dn/xutkQ/hyHOiYdBwt/bCCJwFeXQzZyuXjTJZFrr0/img.png?width=400&amp;height=300&amp;face=0_0_400_300,https://scrap.kakaocdn.net/dn/b9P6kH/hyHOqWfJoK/FchWRvu1k630hdIul1zJ7K/img.png?width=867&amp;height=503&amp;face=0_0_867_503,https://scrap.kakaocdn.net/dn/eHpBs/hyHOf8fzMV/EO1qx62TiAS15TdAu8ldUK/img.png?width=666&amp;height=270&amp;face=0_0_666_270"><a href="https://visualgo.net/ko/sorting" target="_blank" rel="noopener" data-source-url="https://visualgo.net/ko/sorting">
+<div class="og-image" style="background-image: url('https://scrap.kakaocdn.net/dn/xutkQ/hyHOiYdBwt/bCCJwFeXQzZyuXjTJZFrr0/img.png?width=400&amp;height=300&amp;face=0_0_400_300,https://scrap.kakaocdn.net/dn/b9P6kH/hyHOqWfJoK/FchWRvu1k630hdIul1zJ7K/img.png?width=867&amp;height=503&amp;face=0_0_867_503,https://scrap.kakaocdn.net/dn/eHpBs/hyHOf8fzMV/EO1qx62TiAS15TdAu8ldUK/img.png?width=666&amp;height=270&amp;face=0_0_666_270');">&nbsp;</div>
+<div class="og-text">
+<p class="og-title">VisuAlgo - Sorting (Bubble, Selection, Insertion, Merge, Quick, Counting, Radix)</p>
+<p class="og-desc">VisuAlgo is free of charge for Computer Science community on earth. If you like VisuAlgo, the only payment that we ask of you is for you to tell the existence of VisuAlgo to other Computer Science students/instructors that you know =) via Facebook, Twitter</p>
+<p class="og-host">visualgo.net</p>
+</div>
+</a></figure>
+<h2>버블 정렬</h2>
+<ul>
+<li>개념 - 끝 점(i) 를 찍고 처음부터(j) 그 다음(j+1) 점과 비교하여 스왑하며 끝 점까지 진행.</li>
+<li>비고 - <code>안정 정렬</code></li>
+</ul>
+<pre class="mipsasm"><code>def bubble_sort(arr):
+    for i in range(len(arr)-1, -1, -1):    # 끝점을 찍는다.
+        swap = False
+        for j in range(i):                 # 첫 지점부터 시작하여 다음 지점과 비교한다.
+            if arr[j] &gt; arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                swap = True                # 매 스텝마다 스왑 여부를 확인하여 조기종료를 할 수 있다.
+        if not swap:
+            break
+    return arr
+</code></pre>
+<h2>선택 정렬</h2>
+<ul style="list-style-type: disc;" data-ke-list-type="disc">
+<li>개념 - 첫 지점(i) 을 찍고 그 지점부터 끝까지(j) 가며 최소값을 찾아서 첫 지점과 바꾼다.</li>
+<li>비고 - 불안정 정렬</li>
+</ul>
+<pre class="properties"><code>def selection_sort(arr):
+    for i in range(len(arr)):                # 최소값을 놓은 첫점을 찍는다.
+        min_idx = 0
+        min_value = 1e9
+        for j in range(i, len(arr)):        # 그 지점부터 이후까지 돌며 최소값을 찾는다.
+            if arr[j] &lt; min_value:
+                min_value = arr[j]
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr</code></pre>
+<h2>삽입 정렬</h2>
+<ul style="list-style-type: disc;" data-ke-list-type="disc">
+<li>개념 - 두 번째 지점(i)부터 시작하여 그 앞에서 처음까지(j) 거꾸러 내려가면 보다 작은 값이 나올때까지 바꾼다.</li>
+<li>비고 - 안정 정렬</li>
+</ul>
+<pre class="mipsasm"><code>def insertion_sort(arr):
+    for i in range(1, len(arr)):            # 두 번째 지점부터 찍는다.
+        for j in range(i, 0, -1):            # 그 지점 앞에서 부터 첫 지점까지 거꾸로 자신이 들어갈 자리를 찾는다.
+            if arr[j-1] &gt; arr[j]:
+                arr[j], arr[j-1] = arr[j-1], arr[j]
+            else:
+                break
+    return arr</code></pre>

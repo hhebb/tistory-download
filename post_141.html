@@ -1,0 +1,78 @@
+<h1>네트워크 플로우</h1>
+<p>유향 그래프에서 특정한 지점에서 다른 지점으로 데이터가 얼마나 많이 흐르는가에 대한 정보<br>최대 유량 문제 - 네트워크 상에서 얼마나 많은 유량을 흘려보낼 수 있는가</p>
+<h2>Edmand-Karp 알고리즘</h2>
+<ul>
+<li>개념<br>가능한 용량의 양을 반복적으로 더한다.<br>순서없이 그냥 계속 반복하면 되는 단순한 알고리즘</li>
+<li>비고<br>bfs 를 이용한 에드몬드 카프 알고리즘이 일반적<br>숨어있는 경로를 찾기 위해 음의 유량을 고려해주어야 한다.<br>시간 복잡도는 $O(V*E^2)$ 로 증명됨.</li>
+</ul>
+<pre><code># Edmand-Karp 알고리즘
+from collections import deque
+
+edges = [
+    (1,2,12),
+    (1,4,11),
+    (2,3,6),
+    (2,4,3),
+    (2,5,5),
+    (2,6,9),
+    (3,6,8),
+    (4,5,9),
+    (5,3,3),
+    (5,6,4),
+
+]
+n_node = 6
+graph = [[] for _ in range(n_node+1)]
+c = [[0] * (n_node+1) for i in range(n_node+1)] # 총 용량
+f = [[0] * (n_node+1) for i in range(n_node+1)]     # 현재 유량
+
+for src, dst, cap in edges:
+    graph[src].append(dst)
+    graph[dst].append(src)
+    c[src][dst] = cap
+
+def Edmand_karp(graph, start, end):
+    total_flow = 0
+
+    # 모든 경로를 찾아서 처리해준다. 한 번에 하나의 경로만
+    while True:
+        visited = [-1] * (n_node+1)
+        q = deque()
+        q.append(start)
+        while q:
+            here = q.popleft()
+            for there in graph[here]:
+                if c[here][there] &gt; f[here][there] and visited[there] ==-1:
+                    visited[there] = here
+                    q.append(there)
+                    if there == end:
+                        break
+        # 목표지점까지의 경로가 없으면 종료한다.
+        if visited[end] == -1:
+            break
+
+        i = end
+        flow = 1e9
+        # 구한 경로상에서 가장 작은 flow 를 구한다.
+        while i != start:
+            flow = min(flow, c[visited[i]][i] - f[visited[i]][i])
+            i = visited[i]
+
+        i = end
+        # 잔여 유량 residual 을 위한 로직. 
+        # 역방향 간선을 고려하여 숨은 유량을 찾아낼 수 있게 한다.
+        # 실제로 목표지점까지 흐르지는 않지만, 중간에 흐를 수 있는 곳까지는 다 흘려주기 위함.
+        while i != start:
+            f[visited[i]][i] += flow
+            f[i][visited[i]] -= flow
+            i = visited[i]
+
+        print(flow)
+        total_flow += flow
+
+    return total_flow
+Edmand_karp(graph, 1, 6)</code></pre><h2>Ford-Fulkerson 알고리즘</h2>
+<ul>
+<li>개념<br>위의 알고리즘을 dfs 로 구현한 알고리즘</li>
+<li>비고<br>재귀로 구현하면 재귀 스택이 넘칠수도 있음</li>
+</ul>

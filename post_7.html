@@ -1,0 +1,38 @@
+<h2>출처</h2>
+<p>프로그래머스, 2019 카카오 블라인드 채용</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 1</p>
+<h2>유형</h2>
+<p>단순 구현</p>
+<h2>특이사항</h2>
+<p>리스트 한 칸 더 만들어 1 부터 시작 처리<br>value 로 index 를 정렬하는데 딕셔너리 사용<br>람다식으로 정렬 key 지정<br>리스트 표현식으로 필요한 아이템만 뽑음</p>
+<h2>총평</h2>
+<p>별 어려움 없었음.<br>실전에선 5 ~ 10 분 컷 해야할 듯.<br>문제를 정확히 읽어야 함.</p>
+<pre><code>def solution(N, stages):
+    answer = []
+    cleared_user = [0] * (N + 1)
+    static_user = [0] * (N + 1)
+    ratio = {}
+
+    # 각 스테이지 처리
+    for user in stages:        
+        # 모두 클리어 한 유저는 머무르고 있는 곳이 없다.
+        if user == N + 1:
+            user -= 1
+        # 머무르고 있는 스테이지 유저 수 채우기
+        else:
+            static_user[user] += 1
+
+        # 클리어 한 유저 수 채우기
+        for stage in range(1, user + 1):
+            cleared_user[stage] += 1
+
+    for i in range(1, N + 1):
+        if cleared_user[i] &gt; 0:
+            ratio[i] = static_user[i] / cleared_user[i]
+        else:
+            ratio[i] = 0
+    sorted_ratio = sorted(ratio.items(), reverse=True, key=lambda item:item[1])
+    answer = [item[0] for item in sorted_ratio]
+    #answer = sorted_ratio.keys()
+    return answer</code></pre>

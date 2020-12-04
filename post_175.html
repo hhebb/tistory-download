@@ -1,0 +1,193 @@
+<h1>문자열 매칭</h1>
+<h2>Aho-corasik</h2>
+<ul>
+<li>
+<p>개념<br />1 : 다 패턴 매칭 알고리즘이다.<br />Trie 구조를 사용하며 KMP 의 실패함수 아이디어를 가미한 알고리즘</p>
+</li>
+<li>
+<p>비고<br />찾으려는 패턴을 trie 에 저장하고 긴 문자열의 문자를 하나씩 검사한다.<br />시간 복잡도는 선형 KMP 처럼 선형 $O(N+\sum{P})$ 에 불과하다.<br />fail link, output link 개념이 필요하다. 실패 함수와 대응되는 개념.</p>
+<p>KMP 를 완벽히 이해하지 못하면 이해할 수 없는 알고리즘이다.<br />KMP 도 쉽지 않은데 이것까지 이해하려면 솔직히 좀 어렵다.<br />이건 완전히 이해를 하지 못했고 그래서 구현도 아직 할 수 없다.<br />일단 코드를 가져와서 돌려보고, 하고 싶을 때 이해하고 구현해봐야겠다.<br /><a>영상 링크</a></p>
+</li>
+</ul>
+<pre class="ruby"><code>from collections import deque
+
+class State:
+    sid = None
+    value = None
+    isFinal = False
+    tranList = None
+    failState = 0
+    outputSet = None
+
+    def __init__(self, sid, val):
+        self.sid = sid
+        self.value = val
+        self.tranList = {}
+        self.failState = 0
+        self.outputSet = set()
+
+    def goto(self, key):
+        if key in self.tranList:
+            return self.tranList[key]
+
+    def addOutput(self, key):
+        self.outputSet = self.outputSet ^ key
+
+    def display(self):
+        for node in self.tranList.keys():
+            s = self.tranList[node]
+            s.display()
+
+class AhoCorasick:
+    root = None
+    sid = 0
+    table = {}
+
+    def __init__(self):
+        self.root = State(0, None)
+        self.table[0] = self.root
+
+    def addKeyword(self, keyword):
+        current = self.root
+
+        for key in keyword:
+            if key not in current.tranList:
+                self.sid = self.sid + 1
+                current.tranList[key] = State(self.sid, key)
+                self.table[self.sid] = current.tranList[key]
+
+            current = current.tranList[key]
+
+        current.isFinal = True
+        current.outputSet.add(keyword)
+
+    def setFailure(self):
+        queue = deque()
+        current = self.root
+
+        for k in self.root.tranList:
+            queue.append(self.root.tranList[k])
+
+        while len(queue) != 0:
+            r = queue.popleft()
+            for k in r.tranList:
+                queue.append(r.tranList[k])
+                nd = r.tranList[k]
+                # node = parent's failState
+                # goto(node, value)
+                sid = r.failState
+                value = nd.value
+                current = self.table[sid]
+
+                while True:
+                    if current.goto(value) == None and current.sid != 0:
+                        new_sid = current.failState
+                        current = self.table[new_sid]
+                    else:
+                        break
+                child = current.goto(value)
+
+                if child == None:
+                    nd.failState = current.sid
+                else:
+                    nd.failState = child.sid
+
+                nd.addOutput(self.table[nd.failState].outputSet)
+
+    def findString(self, str):
+        current = self.root
+
+        for key in str:
+            print("Check:", key)
+            while True:
+                if current.goto(key) == None and current.sid != 0:
+                    current = self.table[current.failState]
+                    print("failure:", current.sid)
+                else:
+                    child = current.goto(key)
+                    break;
+            if child != None:
+                current = child
+                if len(child.outputSet) &gt; 0:
+                    print("Sid:", child.sid , child.outputSet)
+
+    def display(self):
+        self.root.display()
+
+x =AhoCorasick()
+x.addKeyword("he")
+x.addKeyword("she")
+x.addKeyword("his")
+x.addKeyword("hers")
+x.setFailure()
+x.display()
+
+a = "she is hers"
+print(a)
+x.findString(a)
+
+</code></pre>
+<pre class="pf"><code>FAIL = -1
+
+def aho_corasick(string, keywords):
+    transitions = {}
+    outputs = {}
+    fails = {}
+
+    new_state = 0
+
+    for keyword in keywords:
+        state = 0
+
+        for j, char in enumerate(keyword):
+            res = transitions.get((state, char), FAIL)
+            if res == FAIL:
+                break
+            state = res
+
+        for char in keyword[j:]:
+            new_state += 1
+            transitions[(state, char)] = new_state
+            state = new_state
+
+        outputs[state] = [keyword]
+
+    queue = []
+    for (from_state, char), to_state in transitions.items():
+        if from_state == 0 and to_state != 0:
+            queue.append(to_state)
+            fails[to_state] = 0
+
+    while queue:
+        r = queue.pop(0)
+        for (from_state, char), to_state in transitions.items():
+            if from_state == r:
+                queue.append(to_state)
+                state = fails[from_state]
+
+                while True:
+                    res = transitions.get((state, char), state and FAIL)
+                    if res != FAIL:
+                        break
+                    state = fails[state]
+
+                failure = transitions.get((state, char), state and FAIL)
+                fails[to_state] = failure
+                outputs.setdefault(to_state, []).extend(
+                    outputs.get(failure, []))
+
+    state = 0
+    results = []
+    for i, char in enumerate(string):
+        while True:
+            res = transitions.get((state, char), state and FAIL)
+            if res != FAIL:
+                state = res
+                break
+            state = fails[state]
+
+        for match in outputs.get(state, ()):
+            pos = i - len(match) + 1
+            results.append((pos, match))
+
+    return results</code></pre>

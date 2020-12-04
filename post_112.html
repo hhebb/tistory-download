@@ -1,0 +1,61 @@
+<h1>12 강</h1>
+<p>DP - 기초 문제 풀이<br />DP 는 그냥 어렵다.<br />DP 테이블 정의하는것이 쉽지 않다.<br />대표적인 유형은 그냥 외워야겠다.<br />그러면 다른 문제에 응용할 수 있을 것이다.<br />피보나치류 문제, 배낭문제, LIS 문제 등등</p>
+<p>점화식을 세우면 단순히 순차적으로 계산하는것인지, 지속적으로 갱신이 필요한 것인지 둘 중 하나로 나뉘는 듯.</p>
+<h2>01 타일</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - DP</li>
+<li>핵심<br />모든 경우의 수를 구해야 함.<br />사이즈를 보면 O(N) 으로 해결해야 함.</li>
+</ul>
+<pre class="angelscript"><code>#### 01 타일
+n = int(input())
+arr = [0] * 1000002
+arr[1] = 1
+arr[2] = 2
+if n &lt; 2:
+    print(n)
+else:
+    for i in range(2, n+2):
+        arr[i] = (arr[i-1] + arr[i-2]) % 14746
+    print(arr[n+1])</code></pre>
+<h2>평범한 배낭</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - DP</li>
+<li>핵심<br />DP 테이블을 만들줄 알아야 함.</li>
+<li>비고<br />예전에도 몇번 공부했고 이해를 했었는데 신기하게도 또 까먹었다.<br />개념 자체가 쉽지 않은 것이다.<br />1 차원 테이블은 그나마 쉽지만 2 차원은 도저히 생각하기가 쉽지가 않다.<br />대체 무게를 하나씩 늘려간다는 아이디어는 어떻게 바로 떠올릴까?<br />그냥 외워야겠다. 그리고 다른 2 차원 테이블 문제에 써먹는 수 밖에 없다.<br />참고로 시간복잡도도 계산할 줄 알아야함. O(NK)</li>
+</ul>
+<pre class="sql"><code># 평범한 배낭
+n, k = list(map(int, input().split()))
+cache = [[0] * (k + 1) for _ in range(n + 1)]
+
+for i in range(1, n+1):
+    w, v = list(map(int, input().split()))
+    for j in range(1, k+1):
+        if w &gt; j:
+            cache[i][j] = cache[i-1][j]
+        else:
+            cache[i][j] = max(cache[i-1][j], cache[i-1][j-w] + v)
+print(cache[n][k])</code></pre>
+<h2>가장 긴 증가하는 부분 수열</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - DP</li>
+<li>핵심
+<ul>
+<li>DP 테이블을 정의하고 점화식을 세울 수 있어야 한다.</li>
+<li>DP 아이디어를 떠올릴 수 있어야 한다.</li>
+</ul>
+</li>
+<li>비고<br />O(N^2) 에 풀 수 있는 문제다.</li>
+</ul>
+<pre class="sql"><code># 가장 긴 증가하는 부분 수열
+n = int(input())
+cache = [1] * n
+arr = list(map(int, input().split()))
+
+for i in range(1, n):
+    for j in range(i):
+        if arr[i] &gt; arr[j]:
+            cache[i] = max(cache[j]+1, cache[i])
+print(max(cache))</code></pre>

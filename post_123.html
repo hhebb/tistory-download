@@ -1,0 +1,115 @@
+<h1>18 강</h1>
+<p>그리디 알고리즘 핵심 문제</p>
+<h2>센서</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 그리디</li>
+<li>핵심<ul>
+<li>정렬하고 k 개의 영역을 나누는 것으로 생각하면 된다.</li>
+<li>사실상 정렬만 하면 되므로 정렬에 걸리는 시O(NlogN) 이면 끝난다.</li>
+<li>가장 큰 간격을 순서대로 제외시키면 된다.</li>
+</ul>
+</li>
+<li>비고<br>어렵진 않으나 아이디어를 생각하는 과정이 필요하기 때문에 조금 힘들수도 있다.<br>아이디어를 떠올리지 못하면 풀 수 없는 문제이다.<br>그리디나 DP 는 구현력이 필요하다기보다 아이디어 떠올리는 과정이 어려우므로 기본적으로 난이도가 좀 높다.<br>아예 속도 못 댈 수가 있으므로 이 유형이 나온다면 이 점을 염두에 두고 사고력을 동원해야한다.<br>나는 중복되는것을 다 제거했으므로 후처리가 단순했다.</li>
+</ul>
+<pre><code># 센서
+n = 1#int(input())
+k = 3#int(input())
+sensors = [1,5,10,15]#list(map(int, input().split()))
+
+sensors = list(set(sensors))
+sensors.sort()
+print(sensors)
+intervals = [sensors[i] - sensors[i-1] for i in range(1, len(sensors))]
+intervals.sort(reverse=True)
+print(intervals)
+print(intervals[k-1:])
+print(sum(intervals[k-1:]))</code></pre><h2>도서관</h2>
+<ul>
+<li>난이도 - 중</li>
+<li>유형 - 그리디</li>
+<li>핵심<ul>
+<li>heap 을 사용하면 간단하다.</li>
+<li>0 보다 큰것, 0 보다 작은것 나눠 2 개의 heap</li>
+<li>한 번에 m 개씩 묶어서 처리한다.</li>
+</ul>
+</li>
+<li>비고<ul>
+<li>아이디어는 제대로 떠올렸고 예시는 맞았는데 틀렸다.</li>
+<li>모범답안과 다른점은 heap 을 쓰느냐 아니면 그냥 정렬을 했느냐인데 뭔 차인지 모르겠다.</li>
+<li>다시 풀어야겠다.</li>
+</ul>
+</li>
+</ul>
+<pre><code># 도서관
+from heapq import *
+n, m = 7,100#list(map(int, input().split()))
+books = [37,-2,6,39,29,-11,28]#list(map(int, input().split()))
+answer = 0
+#max_dist = max([(abs(book), i) for i, book in enumerate(books)])
+#print(max_dist)
+left = [book for book in books if book &lt; 0]
+right = [book for book in books if book &gt; 0]
+left.sort()
+right.sort(reverse=True)
+print(left, right)
+
+largest = max(max(books), -min(books))
+print(largest)
+while left:
+    print(left)
+    for i in range(m):
+        if i == 0:
+            answer += abs(left[i])
+            print(abs(left[i]))
+        if len(left) &gt; 0:
+            left.pop()
+while right:
+    print(right)
+    for i in range(m):
+        if i == 0:
+            answer += abs(right[i])
+            print(abs(right[i]))
+        if len(right) &gt; 0:
+            right.pop(0)
+
+print(answer*2 - largest)</code></pre><h2>컵라면</h2>
+<ul>
+<li><p>난이도 - 중</p>
+</li>
+<li><p>유형 - 그리디</p>
+</li>
+<li><p>핵심</p>
+<ul>
+<li>데드라인을 기준으로 오름차순 정렬을 한다.</li>
+<li>heap 을 사용해서 하나씩 없애주는 것이 포인트</li>
+<li>정렬과 heap 조작은 모두 O(NlogN)</li>
+</ul>
+</li>
+<li><p>비고</p>
+<ul>
+<li>이 문제도 아이디어는 다 생각했는데 시간초과에서 터졌다.</li>
+<li>힙을 사용해야겠다는 생각을 하나도 안했는데 이것 때문에 그런지는 확인하지 못했다.</li>
+<li>이 챕터는 다시 풀어야겠다.</li>
+</ul>
+<p>이 문제처럼 2 개이상의 집합으로 값이 주어진다면, 하나를 기준으로 정렬을 한다.<br>그리고 힙을 이용하면 나머지 원소 중 하나로 정렬이 되는것처럼 사용할 수 있다.<br>꽤 많이 쓰이는 테크닉인듯 하다.</p>
+</li>
+</ul>
+<pre><code># 컵라면
+from heapq import *
+n = int(input())
+array = []
+q = []
+
+for i in range(n):
+    a, b = map(int, input().split(&#39; &#39;))
+    array.append((a, b))
+array.sort()
+
+for i in array:
+    a = i[0]
+    heappush(q, i[1])
+    if a &lt; len(q):
+        heappop(q)
+
+print(sum(q))</code></pre>

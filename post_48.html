@@ -1,0 +1,33 @@
+<h2>출처</h2>
+<p>프로그래머스, 2018 프로그래머스 기출</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>조합</p>
+<h2>특이사항</h2>
+<p>조합 사용<br>소수 판별</p>
+<h2>총평</h2>
+<p>조합 수에 대한 감이 없었는데, 대략 25 개 중 절반을 뽑으면 백만단위로 가는것을 인지함.<br>하지만 50 개 중 3 개만 뽑는것은 문제가 없음을 미리 확인하고 안심하고 combinations 를 썼음.<br>최대 원소가 1000 이하라서 단순한 소수 판별 알고리즘도 무리가 없음을 인지하고 간단하게 해결함.</p>
+<pre><code>from itertools import combinations
+
+def is_prime(n):
+    ret = True
+    for i in range(2, n):
+        if n % i == 0:
+            ret = False
+            break
+
+    return ret
+
+def solution(nums):
+    answer = 0
+    combi = combinations(nums, 3)
+
+    prime = 0
+    for com in combi:
+        prime = 0
+        for c in com:
+            prime += c
+        if is_prime(prime):
+            answer += 1
+    return answer</code></pre>

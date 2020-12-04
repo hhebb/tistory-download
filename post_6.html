@@ -1,0 +1,51 @@
+<h2>출처</h2>
+<p>프로그래머스, 2018 카카오 블라인드 채용 1차 문제</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 1.</p>
+<h2>유형</h2>
+<p>문자열, 구현</p>
+<h2>특이사항</h2>
+<p>리스트 초기화<br />아스키코드로 숫자 문자 구분<br />점수가 두자리인 10 일 때 처리 까다로움<br />sum 함수 사용</p>
+<p>점수 슬롯을 만들어 점수계산 관리</p>
+<h2>총평</h2>
+<p>약 30 분 가량 걸림.<br />로직을 구현하는 구현 문제.<br />쉬운문제인데 문자열 다루기가 까다롭다고 생각함.<br />다른 사람 코드를 보고 배워야 함.</p>
+<p>토큰화 하는 방법도 있는데, 길이가 짧아서 그럴 필요는 없는 듯.&nbsp;</p>
+<p>만약 한다면 정규표현식 re 를 써야함.</p>
+<pre class="angelscript"><code>def solution(dartResult):
+    answer = 0
+    sub_result = [0] * 3
+    order = -1
+
+    for idx, c in enumerate(dartResult):
+        if ord(c) &lt; 58 and ord(c) &gt;= 48:
+            # 10 이 었을 때 넘겨야 함.
+            if idx &gt; 0 and (ord(dartResult[idx-1]) &gt;= 48 and ord(dartResult[idx-1]) &lt; 58):
+                continue
+
+            order += 1
+
+            # 10 인 경우
+            if idx &lt; len(dartResult) and dartResult[idx+1] == '0':
+                sub_result[order] = 10
+                print(10, end='')
+            # 10 미만 점수인 경우
+            else:
+                sub_result[order] = int(c)
+
+
+        elif ord(c) &gt; 65 and ord(c) &lt; 97:
+            if c == 'D':
+                sub_result[order] **= 2
+            elif c == 'T':
+                sub_result[order] **= 3
+        else:
+            if c == '*':
+                sub_result[order] *= 2
+                if order &gt; 0:
+                    sub_result[order - 1] *= 2
+            else:
+                sub_result[order] *= -1
+    #print(sub_result)
+    answer = sum(sub_result)
+
+    return answer</code></pre>

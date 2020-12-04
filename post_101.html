@@ -1,0 +1,129 @@
+<h1>8 강</h1>
+<p>기본 탐색.<br />쉬운 문제들이지만 문제에 접근하는 인사이트를 하나라도 배울 수 있다.</p>
+<h2>문서 검색</h2>
+<ul style="list-style-type: disc;" data-ke-list-type="disc">
+<li>난이도 - 하</li>
+<li>유형 - 탐색</li>
+<li>핵심<br />데이터 수가 작아서 그냥 다 탐색하면 됨. NxM 해도 백만따리<br />문서의 처음부터 단어를 찾다가 등장하면 단어 크기만큼 점프, 아니면 한 칸씩 점프.<br />순차적으로 탐색하는 것임.</li>
+<li>건너뛰며 탐색하는 유형.</li>
+</ul>
+<pre class="livecodeserver"><code># 문서 검색
+doc = input()
+word = input()
+
+answer = 0
+i = 0
+while i &lt; len(doc):
+    if doc[i:i+len(word)] == word:
+        print(i, doc[i:i+len(word)])        
+        i += len(word)
+        answer += 1
+    else:
+        i += 1
+
+print(answer)</code></pre>
+<h2>새</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 탐색</li>
+<li>핵심<br />최대 크기는 10 억이지만 날아가는 새의 수는 등차수열(n^2) 이 되므로 결국 연산은 10,000 정도로 줄어든다.<br />순차 탐색인데, 건너뛰며 탐색하는 유형이라고 생각한다.<br />사실상 시간복잡도는 $O(N^2)$</li>
+<li>비고<br />쉽지만 빠르게 생각할 줄 알아야함.</li>
+</ul>
+<pre class="properties"><code># 새
+n = int(input())
+n_2 = n
+i = 1
+t = 0
+
+while n_2 &gt; 0:
+    if i &gt; n_2:
+        i = 1
+    n_2 -= i
+    i += 1
+    t += 1
+
+print(t)</code></pre>
+<h2>베스트 셀러</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 탐색</li>
+<li>핵심<br />등장횟수를 세는것은 해시, 등장여부 확인하는 것은 집합을 떠올린다.<br />이 문제는 해시.<br />최대 등장횟수를 구하고 그것을 value 라고 하고 그 key 를 찾는다.</li>
+</ul>
+<pre class="vim"><code># 베스트셀러
+from collections import defaultdict
+
+n = int(input())
+
+arr = []
+kind = set()
+count = defaultdict(int)
+
+for _ in range(n):
+    book = input()
+    arr.append(book)
+    count[book] += 1
+
+count = sorted(count.items())
+count = sorted(count, key=lambda x:x[1], reverse=True)
+print(count)
+print(count[0][0])</code></pre>
+<h2>트로피 진열</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 탐색</li>
+<li>핵심<br />배열을 순차적으로 탐색하여 조건에 맞게 푼다.</li>
+<li>비고<br />순차적으로 탐색하는 것을 훈련하다.<br />반복문에서 인덱스의 위치와 그 상황을 자연스럽게 떠올릴 수 있어야 한다.<br />쉽다.</li>
+</ul>
+<pre class="properties"><code># 트로피 진열
+n = int(input())
+r, l = 1, 1
+trophy = []
+
+for _ in range(n):
+    trophy.append(int(input()))
+
+h_max = trophy[0]
+for t in trophy[1:]:
+    if h_max &lt; t:
+        l += 1
+        h_max = t
+
+h_max = trophy[-1]
+for t in trophy[len(trophy)-2::-1]:
+    if h_max &lt; t:
+        r += 1
+        h_max = t
+
+print(l, r, sep='\n')</code></pre>
+<h2>성 지키기</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 탐색</li>
+<li>핵심<br />2 차원 배열 훈련<br />행, 열 별로 탐색을 시도한다.<br />행, 열을 나누어서 생각해야 한다.<br />경비원이 열, 행 기준으로 빈 줄을 세고 더 큰 것을 출력하면 된다.</li>
+<li>비고<br />쉽지만 아이디어 떠올릴줄 알아야 한다.<br />행, 열을 나누어서 별개로 생각하는 문제는 거의 1 차원 문제라서 쉽다.<br />하지만 그래프처럼 접근해야 하는 문제는 구현 복잡도가 올라가 난이도가 높아진다.</li>
+</ul>
+<pre class="maxima"><code># 성 지키기
+row, col = list(map(int, input().split()))
+
+matrix = [[] for i in range(row)]
+for r in range(row):
+    matrix[r] = [c for c in input()]#list(input().split())
+print(matrix)
+
+r_empty = 0
+c_empty = 0
+
+for r in range(row):
+    if 'X' not in matrix[r]:
+        r_empty += 1
+
+for c in range(col):
+    exist = False
+    for r in range(row):
+        if matrix[r][c] == 'X':
+            exist = True
+            break
+    if not exist:
+        c_empty += 1
+
+print(max(r_empty, c_empty))</code></pre>

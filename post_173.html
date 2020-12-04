@@ -1,0 +1,36 @@
+<h1>4 강</h1>
+<h2>Multiplexing / demultiplexing</h2>
+<ul>
+<li>multiplexing (mux)<br>송신자가 데이터를 전송 계층으로 내려 줄 때, app 계층에서 여러 port 에서 나오는 데이터들을 하나의 묶음으로 만드는 것.<br>세그먼트로 만들어서 전송한다.<br>세그먼트는 데이터와 헤더로 이뤄짐.<br>헤더 필드 안에 목적지(ip, port) 를 넣는다!<br>sender 측면</li>
+<li>demultiplexing (demux)<br>수신자가 전송 계층으로부터 데이터를 받을 때, 하나로 된 전송 계층 데이터를 해당하는 포트로 app 계층에 뿌려주는 것.<br>알맞은 프로세스로 전달하는 역할<br>받은 세그먼트의 헤더 정보를 보고 demultiplexing 을 수행한다.<br>receiver 측면</li>
+</ul>
+<h2>UDP 에서 demultiplexing</h2>
+<ul>
+<li>목적지 IP 와 port 만 가지고 어떤 소켓으로 demux 할 지 결정한다.</li>
+<li>즉 2 개 정보만 가지고 결정.</li>
+<li>출발지가 달라도(다른 프로세스, 다른 컴퓨터) 목적지만 같으면 같은 곳에 전송(demux)</li>
+<li>connection 개념이 없다는 것을 보여준다. 그냥 다 받겠다는 성격의 UDP</li>
+</ul>
+<h2>TCP 에서 demux</h2>
+<ul>
+<li>목적지의 IP, port 뿐 아니라 출발지의 IP, port 로 결정한다.</li>
+<li>즉 4 개 정보만 가지고 결정. 4 개 중 하나라도 매핑이 다르면 다른 곳에 demux 됨.</li>
+<li>출발지가 다르면 도착지가 같더라도 다른 곳에 전송이 될 수 있다.</li>
+<li>그래서 TCP 웹 서버는 각 사용자들 수 만큼 소켓을 만들기 때문에 부하가 심할 수 있다.(demux 때문에 각각 만들어야함!)</li>
+</ul>
+<h2>패킷 헤더</h2>
+<ul>
+<li>프로토콜의 동작은 헤더 정보를 기반으로 된다.</li>
+<li>프로토콜을 이해한다는 것은 즉 헤더를 이해하는 것임.</li>
+</ul>
+<h2>UDP</h2>
+<ul>
+<li>헤더<br>src port<br>dst port<br>length<br>checksum - 에러 체크. 에러 발생 시 절대 app 계츠응로 올려주지 않는다.</li>
+<li>지원 기능<br>단순하지만 demux 는 해준다.<br>그리고 에러 체크까지 해준다.</li>
+<li>활용처<br>  ARS 음성 신호 전송 - 조금 유실되도 잘 들을 수 있다.<br>  DNS - 오버헤드가 작아서???</li>
+</ul>
+<h2>TCP</h2>
+<ul>
+<li>reliable 하다.<br>전송한 메세지가 오류없이 다 전달되는 것.<br>사실 더 하위 계층에서는 unreliable 한 일이 발생한다.</li>
+<li>unreliable 한 상황이란?<br>패킷 유실<br>패킷 에러</li>
+</ul>

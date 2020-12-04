@@ -1,0 +1,61 @@
+<h1>TCP</h1>
+<h2>overview</h2>
+<ul>
+<li>point - to - point 통신 권장<br>1 송신자 - 1 수신자, 다시 말하면 소켓 - 소켓</li>
+<li>reliable, in-order byte</li>
+<li>pipelined</li>
+<li>full-duplex<br>양방향 통신<br>point 가 송신과 수신 모두 가능<br>즉 각자 sender 이면서 receiver.</li>
+<li>send/receive 버퍼 존재<br>윈도우 크기만큼.<br>수신자는 out of order 패킷 저장을 위해서 가짐.</li>
+<li>connection oriented<br>hand shaking</li>
+<li>flow control<br>receriver 의 소화 능력에 맞게 송신</li>
+<li>congestion control<br>네트워크가 소화할 수 있는만큼 통신할 수 있도로 한다.</li>
+</ul>
+<h2>layer</h2>
+<ul>
+<li>앱 계층 - 메세지. 소켓에 의해 전달됨.</li>
+<li>전송 계층 - 메세지를 세그먼트에 포함하여 아래로 전송</li>
+</ul>
+<h2>TCP 세그먼트 헤더</h2>
+<ul>
+<li>헤더는 중요하다.</li>
+<li>src port, dst port, seq num, ack num, checksum 등등</li>
+</ul>
+<h2>TCP 헤더 구체 내용</h2>
+<ul>
+<li>시퀀스 넘버<br>메시지의 첫번째 바이트 순서번호에 해당함.<br>각각의 end point 는 수신 버퍼, 송신 버퍼가 있다.<br>각각의 수신 버퍼는 반대편 송신 버퍼와 연관이 있어 트래킹한다.</li>
+<li>ack 넘버<br>ACK(n) 은 n-1 까지 잘받았으니 n 번 보내라는 뜻<br>cumulated ack 의 의미이다.</li>
+<li>타임 아웃 - RTT(rount trip time)<br>이동하는데 걸리는 시간.<br>RTT 는 라우팅 경로가 다르면서 상황에 따라서도 다 다르다.<br>RTT 값을 타임 아웃 값으로 낼 수는 없다.<br>보정한 RTT 값을 타임아웃으로 사용한다.<br>하지만 튀는 값을 더 보정하기 위해 보정값에 추가적으로 마진값을 더해준다.</li>
+</ul>
+<h2>TCP reliable datae transfer</h2>
+<ul>
+<li>pipelined segment</li>
+<li>cumulated acks</li>
+<li>단일 타이머</li>
+</ul>
+<h2>시나리오 1</h2>
+<ul>
+<li>하나 보낼 때</li>
+<li>ACK 가 유실되면 타임아웃 터지고 sender 가 해당 세그먼트 재전송</li>
+<li>수신자는 다시 기다리고 있는 동일한 ACK 보냄</li>
+<li>정상적으로 ACK 받으면 sender 는 버퍼를 쫙 갱신한다.</li>
+</ul>
+<h2>시나리오 2</h2>
+<ul>
+<li>2 개 보낼 때</li>
+<li>둘 다 순차적으로 잘 받아서 ACK 도 순차적으로 보내는데</li>
+<li>먼저 보낸 세그먼트가 타임아웃 나면 sender 는 처음 것 다시 보낸다.</li>
+<li>receiver 는 다시 마지막 ACK 보낸다.</li>
+</ul>
+<h2>시나리오 3</h2>
+<ul>
+<li>2 개 보내는데 첫번째 ACK 만 유실되었을 때</li>
+<li>이후의 ACK 는 제대로 받았다면 이전의 세그먼트는 다 정상적으로 받았다는 것을 보장한다.</li>
+<li>그래서 최종 ACK 이전의 데이터에 해당하는 버퍼는 다 비운다.</li>
+<li>이는 cumulated ACK 의 장점</li>
+</ul>
+<h2>Fast Retransmition</h2>
+<ul>
+<li>ACK 를 매번 보낼 필요는 없다.</li>
+<li>세그먼트를 얼마동안 받고 마지막에만 ACK 를 보내도 된다.</li>
+<li>타임아웃 나기 전에 유실을 확인할 수 있다<br>세그먼트를 쏟아 부었는데 ACK 가 같은것을 여러개 계속 받는다면, 그 세그먼트는 유실임을 판단가능!<br>정확히는 3 개의 동일한 세그먼트를 받으면 유실이라고 판단 (실제로는 최초 세그먼트 포함총 4 개)<br>이를 3 duplicated ACK 라고 ? 한다.<br>이를 fast retransmission. 필수는 아니다. 최적화 기법.<br>그러나 타이머는 TCP 에서 필수적인 것이다.</li>
+</ul>

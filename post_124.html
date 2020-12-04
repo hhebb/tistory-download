@@ -1,0 +1,208 @@
+<h1>BST, Heap 구현</h1>
+<h2>BST</h2>
+<ul>
+<li>개념<br>  이진 탐색 트리로, 데이터를 추가 삭제가 가능하며 탐색은 빠르게 하는 이진 트리의 특수한 형태이다.</li>
+<li>비고<br>  삭제 과정이 매우 복잡하다.<br>  탐색시간은 $O(logN)$ 으로 빠르다.<br>  추가되는 데이터는 부모노드와 대소 관계를 비교하여 오른쪽, 왼쪽에 놓이게 된다.<br>  완전 이진 트리가 아니다.<br>  최악의 경우 $O(N)$ 으로 그냥 리스트와 크게 다르지 않다.<br>  최악의 경우는 정렬된 순서대로 트리를 구성하게 되었을 때 일어난다.</li>
+</ul>
+<pre><code># BST
+class Node:
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+class BST:
+    def __init__(self, root):
+        self.root = Node(root)
+
+    # 데이터 추가
+    def insert(self, data):
+        cur_node = self.root
+        while cur_node:
+            if cur_node.data &lt; data:
+                if cur_node.right:
+                    cur_node = cur_node.right
+                else:
+                    cur_node.right = Node(data)
+                    break
+            else:
+                if cur_node.left:
+                    cur_node = cur_node.left
+                else:
+                    cur_node.left = Node(data)
+                    break
+        return
+
+    # 데이터 삭제
+    def delete(self, data):
+        # 1. 삭제할 노드가 leaf node 일 때
+        # 2. 삭제할 노드의 자식이 1 개 일 때
+        # 3. 삭제할 노드가 자식이 2 개 일 때
+        exist = False
+        cur_node = self.root
+        parent_node = self.root
+        while cur_node:
+            print(cur_node.data, data)
+            parent_node = cur_node
+            if cur_node.data == data:
+                exist = True
+                break
+            elif cur_node.data &gt; data:
+                #parent_node = cur_node
+                cur_node = cur_node.left
+            elif cur_node.data &lt; data:
+                #parent_node = cur_node
+                cur_node = cur_node.right
+        # 삭제할 노드가 있을 때
+        if exist:
+            # 1 케이스
+            if cur_node.left == None and cur_node.right == None:
+                if parent_node.data &gt; data:
+                    parent_node.left = None
+                else:
+                    parent_node.right = None
+                del cur_node
+                pass
+            # 2 케이스 -1
+            elif cur_node.right != None and cur_node.left == None:
+                if parent_node.data &gt; data:
+                    parent_node.left = cur_node.right
+                    del cur_node
+                else:
+                    parent_node.right = cur_node.right
+                    del cur_node
+
+            # 2 케이스 - 2
+            elif cur_node.right == None and cur_node.left != None:
+                if parent_node.data &gt; data:
+                    parent_node.left = cur_node.left
+                    del cur_node
+                else:
+                    parent_node.right = cur_node.left
+                    del cur_node
+            # 3 케이스
+            else: # elif cur_node.right != None and cur_node.left != None:
+                # 3 - 1
+                if parent_node.data &gt; data:
+                    change_node = cur_node.right
+                    change_parent_node = cur_node.right
+                    while change_node.left:
+                        change_parent_node = change_node
+                        change_node = change_node.left
+                    change_parent_node.left = None
+                    # 3 - 1 - 1
+                    if change_node.right:
+                        change_parent_node.left = change_node.right
+                    parent_node.left = change_node
+                    change_node.right = cur_node.right
+                    change_node.left = cur_node.left
+                    pass
+                # 3 - 2
+                else:
+                    change_node = cur_node.right
+                    change_parent_node = cur_node.right
+                    while change_node.left:
+                        change_parent_node = change_node
+                        change_node = change_node.left
+                    change_parent_node.right = None
+                    # 3 - 2 - 1
+                    if change_node.right:
+                        change_parent_node.left = change_node.right
+                    parent_node.right = change_node
+                    change_node.left = cur_node.left
+                    change_node.right = cur_node.right
+                    pass
+
+                pass
+
+        else:
+            return False
+        return True
+
+    # 데이터 탐색
+    def search(self, target):
+        find = False
+        cur_node = self.root
+        while cur_node:
+            #print(target, cur_node.data)
+            if cur_node.data == target:
+                find = True
+                break
+            elif cur_node.data &lt; target:
+                cur_node = cur_node.right
+            elif cur_node.data &gt; target:
+                cur_node = cur_node.left
+        return find</code></pre><h2>Heap</h2>
+<ul>
+<li>개념<br>  우선순위 큐라고도 하며 최대, 최소값만 빠르게 구할 때 사용하는 트리구조이다.</li>
+<li>비고<br>  큐 처럼 끝에 데이터 추가, 맨 앞에서 반환하는 기능만 가지고 있다.<br>  완전 이진 트리 형태를 가지고 있어서 배열로 정확히 구현이 가능하다.<br>  형태 특성상 최악의 경우에도 평균 시간 복잡도를 보장한다.<br>  매 순간 힙을 구성하는데 $O(logN)$ 으로 매우 빠르다.<br>  즉 최소, 최대값을 빨리 찾을 수 있다.</li>
+</ul>
+<pre><code># heap
+class heap:
+    def __init__(self):
+        self.arr = [None]
+
+    def push(self, data):
+        self.arr.append(data)
+        change_idx = len(self.arr) - 1
+        while change_idx &gt; 1 and self.arr[change_idx] &gt; self.arr[change_idx//2]:
+            parent_idx = change_idx//2
+            self.arr[change_idx], self.arr[parent_idx] = self.arr[parent_idx], self.arr[change_idx]
+            change_idx = parent_idx
+
+    def pop(self):
+        if len(self.arr) &lt;= 1:
+            return None
+        pop_data = self.arr[1]
+        self.arr[1] = self.arr[-1]
+        del self.arr[-1]
+        pop_idx = 1
+
+        while self._poppable(pop_idx):
+            left = pop_idx * 2
+            right = pop_idx * 2 + 1
+
+
+            if right &gt;= len(self.arr):
+                if self.arr[pop_idx] &lt; self.arr[left]:
+                    self.arr[pop_idx], self.arr[left] = self.arr[left], self.arr[pop_idx]
+                    pop_idx = left
+            else:
+                if self.arr[left] &gt; self.arr[right]:
+                    if self.arr[pop_idx] &lt; self.arr[left]:
+                        self.arr[pop_idx], self.arr[left] = self.arr[left], self.arr[pop_idx]
+                        pop_idx = left
+
+                else:
+                    if self.arr[pop_idx] &gt; self.arr[right]:
+                        self.arr[pop_idx], self.arr[right] = self.arr[right], self.arr[pop_idx]
+                        pop_idx = right
+
+        return pop_data
+
+    def _poppable(self, pop_idx):
+        left = pop_idx * 2
+        right = pop_idx * 2 + 1
+
+        # 왼쪽 자식도 없을 때
+        if left &gt;= len(self.arr):
+            return False
+        # 오른쪽 자식만 없을 때
+        elif right &gt;= len(self.arr):
+            if self.arr[pop_idx] &lt; self.arr[left]:
+                return True
+            else:
+                False
+        # 두 자식 다 있을 때
+        else:
+            if self.arr[left] &gt; self.arr[right]:
+                if self.arr[pop_idx] &lt; self.arr[left]:
+                    return True
+                else:
+                    return False
+            else:
+                if self.arr[pop_idx] &gt; self.arr[right]:
+                    return True
+                else:
+                    return False
+        return</code></pre>

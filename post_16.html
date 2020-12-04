@@ -1,0 +1,36 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>단순 구현</p>
+<h2>특이사항</h2>
+<p>리스트 pop 을 사용하며 큐처럼 사용<br>딕셔너리로 스킬과 인덱스를 함께 저장할 수도 있는데 위의 방법을 사용함.<br>이외에는 단순함.<br>중간 순서뿐 아니라 스킬정보 처음부터 비교가 필요하다.</p>
+<h2>총평</h2>
+<p>어려움 없이 해결.<br>처음에 완전히 이해를 못해서 잘못 풀었었음.1<br>문제를 더 꼼꼼히 읽어야 한다.</p>
+<pre><code>def solution(skill, skill_trees):
+    answer = 0
+    info = []
+
+    # 스킬 정보 
+    for idx, s in enumerate(skill):
+        info.append(s)
+
+    for tree in skill_trees:
+        order = 0
+        possible = True
+
+        for s in tree:
+            # 스킬정보에 있는 스킬일 때
+            if s in skill:
+                # 순서에 맞을 때 순서 올려주고 다음 루프 진행
+                if s == info[order]:
+                    order += 1
+                    pass
+                # 아니면 불가능
+                else:
+                    possible = False
+                    break
+        if possible:
+            answer += 1
+    return answer</code></pre>

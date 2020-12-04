@@ -1,0 +1,20 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>해시</p>
+<h2>특이사항</h2>
+<p>굳이 따지자면 해시 문제.<br>set 으로 간편히 해결</p>
+<h2>총평</h2>
+<p>처음에 조합문제 인것 같아서 combinations 썼지만 시간초과남.<br>입력값이 100,000 이라서 단순히 O(N) 으로 풀어야겠다고 생각함.<br>중복이 안되게 하는 간단한 해시 문제임을 캐치하고 풀었음.</p>
+<pre><code>def solution(nums):
+    answer = 0
+    pool = set()
+
+    for num in nums:
+        pool.add(num)
+        if len(pool) &gt;= int(len(nums) / 2):
+            break
+    answer = len(pool)
+    return answer</code></pre>

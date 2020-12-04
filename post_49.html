@@ -1,0 +1,30 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>문자열</p>
+<h2>특이사항</h2>
+<p>공백을 처리해 줘야함.</p>
+<h2>총평</h2>
+<p>매우 간단한 문제인데 문제 설명이 부실하다고 생각함.<br>공백문자에 대해 의심이 갔지만 문제에 명시되어 있지 않아 알고리즘의 문제라고 인식하고 계속 헛발질 함.</p>
+<pre><code>def solution(s):
+    answer = &#39;&#39;
+    char_list = []
+    for char in s:
+        char_list.append(char)
+
+    word_started = False
+
+    for idx, char in enumerate(char_list):
+        if char != &#39; &#39;:
+            if not word_started:
+                word_started = True
+                char_list[idx] = char.upper()
+            else:
+                char_list[idx] = char.lower()
+        else:
+            word_started = False
+
+    answer = &#39;&#39;.join(char_list)
+    return answer</code></pre>

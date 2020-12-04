@@ -1,0 +1,95 @@
+<h1>11 강</h1>
+<p>힙 자료구조.<br>고급 탐색 알고리즘 - 핵심 유형 문제<br>힙 자료구조.<br>최솟값 문제, 그래프 문제에서 매우 잘 활용이 된다.<br>그래프는 큐, 스택도 잘 써야한다.<br>최소/최대값이 필요하다면 힙을 고려한다.<br>힙에서 값을 뽑고 변형한 후 다시 집어넣는 과정도 익힌다.</p>
+<h2>최소 힙</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 힙, 자료구조</li>
+<li>핵심 </li>
+<li>heapq 라이브러리 활용.<br>  import 했는지 안했는지 확인해야 함. 백준에선 주의해야 한다.</li>
+</ul>
+<pre><code># 최소 힙
+from heapq import *
+
+# 최소 힙 - 0 안 집어넣는 방법도 있다.
+n = int(input())
+heap = []
+result = []
+for _ in range(n):
+    val = int(input())
+
+    if val == 0:
+        if len(heap) &gt; 0:
+            result.append(heappop(heap))
+        else:
+            result.append(0)
+    else:
+        heappush(heap, val)
+for i in result:
+    print(i)</code></pre><h2>카드 정렬하기</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 힙, 그리디, 자료구조</li>
+<li>핵심<ul>
+<li>가장 작은 걸 먼저 pop 해서 <code>비교</code> 연산을 해야 최소 결과를 얻을 수 있다.</li>
+<li>즉, 그리디 전략을 사용해야 함.</li>
+<li>주의할 것은 합친 카드뭉치를 다시 힙에 집어넣어야 다음 최소 연산을 올바르게 수행할 수 있다.</li>
+</ul>
+</li>
+<li>비고<ul>
+<li>실수했다. 쉬운문제인줄 알고 그냥 단순히 더했는데 틀린 방법이었다.<br>그리디라는 것을 알고 당연히 힙에서 차례로 꺼내면 되는 줄 알았는데,<br>중간 결과값도 최솟값을 판단해야 하는것을 아예 놓치고 있었다.<br>그나저나 다시 한 번 자료구조의 활용능력이 중요하다는 것을 느낀다.<br>어려운게 당연하다. 공부하는 단계니까 배우는 마음가짐을 가지자.</li>
+</ul>
+</li>
+</ul>
+<pre><code># 카드 정렬하기
+res = 0
+heap = []
+merge = 0
+n = int(input())
+for _ in range(n):
+    heappush(heap, int(input()))
+
+while len(heap) &gt; 1:
+    val1 = heappop(heap)
+    val2 = heappop(heap)
+    res += (val1+val2)
+    heappush(heap, val1 + val2)
+print(res)</code></pre><h2>문제집</h2>
+<ul>
+<li>난이도 - 중</li>
+<li>유형 - 힙, 위상 정렬</li>
+<li>핵심<ul>
+<li>전형적인 위상 정렬 문제로 치환. 시간 복잡도는 O(V+E). </li>
+<li>순서를 결정해주는 알고리즘. 사이클이 있으면 안됨.</li>
+<li>힙을 사용하면 효과적임.</li>
+<li>진입 차수 정보를 가지고 있어야 함.</li>
+<li>비고</li>
+<li>그래프에서는 스택, 큐(힙) 을 정말 잘 사용해야 한다.</li>
+<li>하나씩 탐색할 때 정말 적합하다.</li>
+</ul>
+</li>
+</ul>
+<pre><code># 문제집
+n, m = list(map(int, input().split()))
+heap = []#
+graph = [[] for i in range(n+1)]
+indegree = [0] * (n+1)
+result = []
+
+for _ in range(m):
+    s, e = list(map(int, input().split()))
+    graph[s].append(e)
+    indegree[e] += 1
+
+for i in range(1, n+1):
+    if indegree[i] == 0:
+        heappush(heap, i)
+
+while heap:
+    here = heappop(heap)
+    result.append(here)
+    for i in graph[here]:
+        indegree[i] -= 1
+        if indegree[i] == 0:
+            heappush(heap, i)
+for r in result:
+    print(r)</code></pre>

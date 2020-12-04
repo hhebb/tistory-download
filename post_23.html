@@ -1,0 +1,50 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>단순 구현<br>힙</p>
+<h2>특이사항</h2>
+<p>우선순위큐(힙) 사용<br>시퀀스 자료구조는 pop 할 때 인덱스 초과 에러 터질 가능성이 높음.<br>집어넣고 꺼내는 과정을 유의해야 함.</p>
+<h2>총평</h2>
+<p>힙 문제라는 것을 안보고 힙 문제라는 것을 깨달은 것은 잘함.<br>자료구조의 특성을 잘 이해하고 있음.<br>집어넣고 꺼낼 때 실수를 하는 것만 유의하면 될 듯.</p>
+<pre><code>import heapq
+
+def solution(scoville, K):
+    answer = 0
+
+    # 최초 음식들 매운순대로 정렬
+    scov = sorted(scoville)
+    h = []
+    for sc in scov:
+        heapq.heappush(h, sc)
+
+    max_mix_count = len(scov) - 1
+    weakest = 0
+
+    # 최대 믹스 횟수 = 음식갯수 - 1
+    for i in range(max_mix_count):
+        weakest = heapq.heappop(h)
+        # 조건 달성 시 정답 설정하고 종료
+        if weakest &gt;= K:
+            answer = i
+            break
+        # 아니면
+        else:
+            # 마지막 믹스일 때 조건만족 안되면 실패
+            if i == max_mix_count - 1:
+                if max_mix_count == 1:
+                    mixed = weakest + heapq.heappop(h) * 2
+                    if mixed &gt;= K:
+                        answer = 1
+                else:
+                    answer = -1
+                break
+            # 아니면 믹스하고 순서에 맞게 끼워넣기
+            else:
+                mixed = weakest + heapq.heappop(h) * 2
+                heapq.heappush(h, mixed)
+
+
+        answer += 1
+    return answer</code></pre>

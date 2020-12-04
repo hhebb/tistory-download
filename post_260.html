@@ -1,0 +1,25 @@
+<h2>ssh 터널링</h2>
+<ul>
+<li>ssh 포트포워딩 이라고도 한다.</li>
+<li>ssh 연결을 통해 서버의 다른 포트를 끌어온다.</li>
+<li>예를 들어 특정 포트가 막혀있어 어떤 프로토콜로 통신이 안될 때,</li>
+<li>ssh 연결한 후 그 특정 포트를 클라이언트에게 내보내 통신한다.</li>
+<li><code>ssh -L [로컬에서 사용할 포트]:[최종적으로 접근할 곳] [SSH Server 주소]</code></li>
+</ul>
+<figure id="og_1606554825804" contenteditable="false" data-ke-type="opengraph" data-og-type="website" data-og-title="What's ssh port forwarding and what's the difference between ssh local and remote port forwarding" data-og-description="I feel confused about ssh port forwarding and the difference between ssh local and remote port forwarding. Could you please explain them in detail and with examples? Thanks!" data-og-host="unix.stackexchange.com" data-og-source-url="https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot" data-og-url="https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot" data-og-image="https://scrap.kakaocdn.net/dn/ciDEN9/hyIoOn7nIz/6gywhCwLKW72z3za448AK0/img.png?width=316&amp;height=316&amp;face=0_0_316_316,https://scrap.kakaocdn.net/dn/uXXEV/hyIoRrCjz7/oujbSd7jPlNuSJS1pVayH1/img.png?width=1206&amp;height=1086&amp;face=0_0_1206_1086,https://scrap.kakaocdn.net/dn/8xqtz/hyIoVOiOAw/LAhGAdjQqTtxGxsUOGNIak/img.png?width=972&amp;height=1009&amp;face=0_0_972_1009"><a href="https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot" target="_blank" rel="noopener" data-source-url="https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot">
+<div class="og-image" style="background-image: url('https://scrap.kakaocdn.net/dn/ciDEN9/hyIoOn7nIz/6gywhCwLKW72z3za448AK0/img.png?width=316&amp;height=316&amp;face=0_0_316_316,https://scrap.kakaocdn.net/dn/uXXEV/hyIoRrCjz7/oujbSd7jPlNuSJS1pVayH1/img.png?width=1206&amp;height=1086&amp;face=0_0_1206_1086,https://scrap.kakaocdn.net/dn/8xqtz/hyIoVOiOAw/LAhGAdjQqTtxGxsUOGNIak/img.png?width=972&amp;height=1009&amp;face=0_0_972_1009');">&nbsp;</div>
+<div class="og-text">
+<p class="og-title">What's ssh port forwarding and what's the difference between ssh local and remote port forwarding</p>
+<p class="og-desc">I feel confused about ssh port forwarding and the difference between ssh local and remote port forwarding. Could you please explain them in detail and with examples? Thanks!</p>
+<p class="og-host">unix.stackexchange.com</p>
+</div>
+</a></figure>
+<figure id="og_1606554830225" contenteditable="false" data-ke-type="opengraph" data-og-type="article" data-og-title="150. [SSH, Network] SSH 포트 포워딩(SSH 터널링)의 개념 및 사용 방법" data-og-description="이번 포스트에서는 'SSH 포트 포워딩' 또는 'SSH 터널링' 이라고 불리는 것에 대해서 설명한다. 1...." data-og-host="blog.naver.com" data-og-source-url="https://m.blog.naver.com/PostView.nhn?blogId=alice_k106&amp;logNo=221364560794&amp;proxyReferer=https:%2F%2Fwww.google.com%2F" data-og-url="https://blog.naver.com/alice_k106/221364560794" data-og-image="https://scrap.kakaocdn.net/dn/ckKc5l/hyInjJ2X29/QKEO2pJKISfk57EyYtvcUk/img.png?width=740&amp;height=376&amp;face=0_0_740_376,https://scrap.kakaocdn.net/dn/b9gEsj/hyIngmfVsR/Yos3QkN7RlZI04xP0n8jr1/img.jpg?width=80&amp;height=51&amp;face=0_0_80_51"><a href="https://m.blog.naver.com/PostView.nhn?blogId=alice_k106&amp;logNo=221364560794&amp;proxyReferer=https:%2F%2Fwww.google.com%2F" target="_blank" rel="noopener" data-source-url="https://m.blog.naver.com/PostView.nhn?blogId=alice_k106&amp;logNo=221364560794&amp;proxyReferer=https:%2F%2Fwww.google.com%2F">
+<div class="og-image" style="background-image: url('https://scrap.kakaocdn.net/dn/ckKc5l/hyInjJ2X29/QKEO2pJKISfk57EyYtvcUk/img.png?width=740&amp;height=376&amp;face=0_0_740_376,https://scrap.kakaocdn.net/dn/b9gEsj/hyIngmfVsR/Yos3QkN7RlZI04xP0n8jr1/img.jpg?width=80&amp;height=51&amp;face=0_0_80_51');">&nbsp;</div>
+<div class="og-text">
+<p class="og-title">150. [SSH, Network] SSH 포트 포워딩(SSH 터널링)의 개념 및 사용 방법</p>
+<p class="og-desc">이번 포스트에서는 'SSH 포트 포워딩' 또는 'SSH 터널링' 이라고 불리는 것에 대해서 설명한다. 1....</p>
+<p class="og-host">blog.naver.com</p>
+</div>
+</a></figure>
+<p>&nbsp;</p>

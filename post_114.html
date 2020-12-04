@@ -1,0 +1,90 @@
+<h1>14 강</h1>
+<p>그래프 탐색 기본 유형 문제</p>
+<h2>dfs 와 bfs</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - dfs, bfs</li>
+<li>핵심<br>dfs, bfs 구현 가능한가?<br>시간복잡도는 O(N+M)<br>정렬이 필요<br>왠만하면 deque 사용하도록 한다.</li>
+<li>비고<br>기본적이고 일반적인 그래프 입력으로 쉬웠다.<br>dfs 는 재귀가 아닌 스택버전으로 작성했다. bfs 와 다르게 result 담는 방식이 조금 다른것을 유의한다.<br>이제 bfs, dfs 는 기본적으로 빠르게 구현은 할 수 있을만큼 암기가 되어있다.<br>이제 변형하고 응용할수도 있어야 한다.<br>그리고 그래프나 트리 문제에서는 간선 입력 순서와 시작점을 항상 확인해야 한다.<br>1 번 노드가 시작 노드라는 말이 없다면 조심해야 한다. 번호 순서대로 입력이 주어지지 않을수도 있다.<br>노드가 숫자가 아닌 더 복잡한 형태에서는 말할 것도 없다.<br>DFS, BFS 는 기본적으로 외워야 한다.</li>
+</ul>
+<pre><code># dfs 와 bfs
+v, e, s = list(map(int, input().split()))
+
+graph = [[] for _ in range(v+1)]
+
+for i in range(e):
+    src, dst = list(map(int, input().split()))
+    graph[src].append(dst)
+    graph[dst].append(src)
+
+for i in range(v+1):
+    graph[i].sort()
+
+def dfs(s):
+    stack = []
+    result = []
+    result.append(s)
+    stack.append(s)
+    while stack:
+        here = stack.pop()
+        if here not in result:
+            result.append(here)
+        for there in graph[here][::-1]:
+            if there not in result:
+                #result.append(there)
+                stack.append(there)
+    #print(result)
+    [print(i,end=&#39; &#39;) for i in result]
+
+def bfs(s):
+    q = []
+    q.append(s)
+    result = []
+    result.append(s)
+    while q:
+        here = q.pop(0)
+        for there in graph[here]:
+            if there not in result:
+                result.append(there)
+                q.append(there)
+
+    #print(result)
+    [print(i,end=&#39; &#39;) for i in result]
+
+dfs(s)
+print()
+bfs(s)</code></pre><h2>숨바꼭질</h2>
+<ul>
+<li><p>난이도 - 하</p>
+</li>
+<li><p>유형 - bfs</p>
+</li>
+<li><p>핵심</p>
+<ul>
+<li>그래프 문제로 치환할 수 있어야 한다.</li>
+<li>bfs 로 최단거리를 구할 수 있어야 한다.</li>
+<li>(중요)- 최단거리 정보는 별도로 배열이나 테이블을 만들어 저장한다.</li>
+</ul>
+</li>
+<li><p>비고<br>새로운 유형이었다.<br>선형탐색인듯 보이지만 그래프처럼 생각할 수도 있었다.<br>매 순간마다 3 갈래로 선택할 수 있으므로 완전탐색의 트리, 그래프로도 보일 수 있다.<br>더 신기한것은 굳이 그래프 구조를 만들지 않더라도 bfs 처럼 탐색을 할 수 있다.<br>트리처럼 가지를 뻗치는데 그 방향이 항상 숫자가 커지는 방향이므로 별도의 그래프 구조가 없이<br>그래프 조건을 갖춘다.<br>이동한 거리는 지금까지 도달하지 않았다면 이전 거리에 1 을 더해주는 방식의 트릭을 쓴다.<br>신기한 유형이다.<br>그래프, 트리는 정말 다양한 상황에서 치환되어지는것 같다.</p>
+<p>거리를 구하는 것이라서 다익스트라를 구현했다.<br>가중치가 없다는 것을 알고 띠용했지만 무조건 1 이라고 설정할수 있었다.<br>결과는 모범답안과 다른 점이 몇군데 있었다.<br>정확한 문제점은 모르겠으나 대부분은 맞는것으로 보아, 예외처리 부분을 잘못했다고 생각한다.<br>어쨌든 bfs 로도 이동거리를 구할 수 있어야 한다는것이 중요하다.</p>
+</li>
+</ul>
+<pre><code>from collections import deque
+
+MAX = 100001
+n, k = map(int, input().split())
+dists = [0] * MAX
+
+def bfs():
+    q = deque([n])
+    while q:
+        here = q.popleft()
+        if here == k:
+            return dists[here]
+        for there in (here-1, here+1, 2*here):
+            if 0 &lt;= there &lt; MAX and not dists[there]:
+                dists[there] = dists[here] + 1
+                q.append(there)
+
+print(bfs())</code></pre>

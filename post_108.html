@@ -1,0 +1,78 @@
+<h1>html 고급</h1>
+<h2>메타 요소</h2>
+<p>head 요소 안에 들어가는 meta 요소.</p>
+<h2>문자셋 메타 정보</h2>
+<p>charset<br><code>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</code><br>글자 깨짐 현상이 발생하면 이 메타 정보와 페이지의 문자셋이 달라 생기는 문제일 수 있음.<br>국내에선 UTF-8, EUC=KR 을 많이 쓴다. UTF-8 이 더 권당됨.</p>
+<h2>description, keyword 메타 정보</h2>
+<p><code>&lt;meta name=&quot;Description&quot; content=&quot;내용&quot; /&gt;</code><br><code>&lt;meta name=&quot;Keywords&quot; content=&quot;키워드1, 키워드2, 키워드3&quot; /&gt;</code><br>설명과 키워드 메타 정보는 검색엔진과 관련이 있다.<br>이는 페이지 제목과 같이 표현, 공유하기 같은 기능에 활용이 된다.<br>키워드 정보는 검색엔진이 검색을 용이하게 하지만 악용 사례가 있어서 요새는 수집안한다는 의견이 있다.</p>
+<h2>author 관련 메타 정보</h2>
+<p><code>&lt;meta name=&quot;author&quot; content=&quot;이름&quot;/&gt;</code><br>페이지의 저자를 나타낸다.<br>큰 의미를 가지진 않는다.</p>
+<h2>우회, 새로고침 메타 정보</h2>
+<p><code>&lt;meta name=&quot;refresh&quot; content=&quot;10;url=http://~~&quot;/&gt;</code><br>숫자만큼 초를 기다리고 다음 페이지로 이동한다.<br>이는 접근성에서 좋지 않으므로 301 리디렉션을 사용한다.</p>
+<h2>IE 모드 메타 정보</h2>
+<p><code>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;</code><br>하위 버전의 IE 에 렌더링되도록 전처리한다.<br>되도록이면 엣지 버전으로 맞춰서 하도록한다.</p>
+<h2>뷰포트 메타 정보</h2>
+<p><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=1200&quot; /&gt;</code><br>모바일이나 태블릿 환경 때문에 사용한다.<br>모바일에서 자동으로 축소되면 크기가 부정확하게 될 수 있으니 이 메타 요소를 명시하는것이 좋음.<br>레이아웃이 꺠지지 않도록 한다.</p>
+<h2>form 요소 - form, input 태그</h2>
+<p>서버에 데이터를 보내는 GET, POST 방식을 알아본다.</p>
+<h2>form 요소</h2>
+<p><code>&lt;form action=&quot;http://~~&quot; method=&quot;get&quot; /&gt;</code><br>action 소성은 폼을 전송할 URL 을 지정한다.<br>method 속성은 get, post 가 있다.<br>get 은 URL 로 값을 방식이다.<br>post 는 서버에 URL 이 아닌 숨겨져서 보내지는 방식</p>
+<h2>get/post</h2>
+<p>get 은 공개, post 는 비공개<br>get 은 서버에서 받아오는 검색/조회 등에 사용<br>post 는 서버에 올리는 글쓰기, 삭제 등 서버의 값을 변화시키는 작업에 사용.</p>
+<h2>input 요소</h2>
+<p>주로 폼 안에 들어가는 input 요소.<br>input 요소는 텍스트, 버튼, 등등 UI 요소들이 들어간다.<br><code>&lt;input type=&quot;text&quot; name=&quot;url&quot; /&gt;</code><br>name 속성은 서버로 전송될 때 할당되는 변수 이름.<br>URL 이름에 변수=값이 붙어서 전송 됨.<br><code>&lt;input type=&quot;submit&quot; value=&quot;전송&quot; /&gt;</code><br>이는 input 요소가 폼 전송 버튼 타입인 경우.</p>
+<h2>label 요소</h2>
+<p>어떤 값을 넣어야 하는지 라벨을 붙여주는 요소.<br><code>&lt;label for=&quot;id&quot;&gt; 아이디입력 &lt;/lable&gt;</code><br><code>&lt;input type=&quot;text&quot; id=&quot;id&quot; /&gt;</code><br>웹 접근성 기준 상 폼 입력 요소가 있다면 만드시 해당하는 label 요소를 갖고 있어야 함.</p>
+<h2>form 요소 2</h2>
+<h2>textarea, input 요소</h2>
+<h2>textarea 요소</h2>
+<p>input 요소의 text 타입과 비슷함.<br>대신 textarea 는 여러줄 입력이 가능<br>cols 속성 - textarea 는 높이, 너비를 가진 글 박스이므로 속성을 필수로 선언해야함.<br><code>&lt;textarea name=&quot;content&quot; cols=&quot;40&quot; rows=&quot;8&quot;&gt; &lt;/textarea&gt;</code><br>css 로 높이, 너비는 수정할 수  있지만 html 에 필수로 명시해야 하는것이 좋음.<br>textaarea 안에는 pre 요소처럼 공백 등이 그대로 노출되고 html 태그도 그대로 노출됨.</p>
+<h2>input 요소</h2>
+<p>폼 입력을 하는 주요한 요소.<br>type 속성에 따라 여러 형태를 보여준다.</p>
+<h2>input 요소 타입</h2>
+<h2>type=&quot;text&quot; - 텍스트 타입 인풋</h2>
+<p><code>&lt;input name=&quot;abc&quot; type=&quot;text&quot; value=&quot;test&quot; /&gt;</code><br>가장 기본적인 형태로, 텍스트 입력 받는 형태.<br>value 속성의 값은 해당 input 의 기본 값으로 들어간다.<br>전송하면 input 의 value 가 전송됨.</p>
+<h2>암호타입 인풋</h2>
+<p><code>&lt;input name=&quot;pw&quot; type=&quot;password&quot; /&gt;</code><br>노출되면 안 되는 텍스트를 입력 받는 타입</p>
+<h2>라디오 버튼 형태 인풋</h2>
+<p><code>&lt;label for=&quot;radio-1&quot;&gt; &lt;input type=&quot;radio&quot; name=&quot;agreement&quot; id=&quot;radio-1&quot; value=&quot;1&quot; /&gt; 예 &lt;/lable&gt;</code><br><code>&lt;label for=&quot;radio-2&quot;&gt; &lt;input type=&quot;radio&quot; name=&quot;agreement&quot; id=&quot;radio-2&quot; value=&quot;0&quot; /&gt; 아니오 &lt;/lable&gt;</code><br>라벨과 함께 사용한 예시<br>라디오 타입은 같은 name 속성 값을 가진 요소를 기준으로 선택한다.(여기서 agreement)<br>폼 전송 시 체크된 input 의 value 값을 전달한다.</p>
+<h2>버튼 형태 인풋</h2>
+<p>버튼 형태를 나타낸다.<br>type=&quot;submit&quot; 과 유사하지만, 폼을 전송하지는 않는다.<br>버튼 인풋은 js 로 동작을 구현하는 용도로 많이 사용됨.<br>button 요소로 대체될 수 있다.</p>
+<h2>파일 업로드 인풋</h2>
+<p>파일을 업로드 할 수 있는 형태<br>업로드할 파일을 선택할 수 있고 폼 전송 시 업로드 된다.<br><code>&lt;input type=&quot;file&quot; name=&quot;pic&quot; /&gt;</code></p>
+<h2>폼 전송 인풋</h2>
+<p>submit 타입은 이 요소가 속한 form 을 제출하는 역할을 한다.<br>value 속성이 버튼의 이름이 되고 button 태그로 대체될 수 있음.<br><code>&lt;input type=&quot;submit&quot; value=&quot;폼 제출&quot; /&gt;</code></p>
+<h2>리셋 인풋</h2>
+<p>button, submit 타입과 비슷한 버튼 형태 타입.<br>form 안에서 폼 값들을 초기화하여 디폴트 값으로 바꿔놓는다.<br>버튼 형태이므로 button 요소로 대체할 수 있음<br><code>&lt;input type=&quot;reset&quot; value=&quot;초기화&quot; /&gt;</code></p>
+<h2>이미지 형태 폼 전송 인풋</h2>
+<p>submit 이 버튼 형태 전송이라면 image 는 이미지 형태로 폼을 전송한다.<br>단순히 이미지 버튼을 구현하려면 기존 button 을 css 로 처리하는 것이 좋음.<br><code>&lt;input type=&quot;image&quot; src=&quot;img&quot; alt=&quot;내용 전송&quot; /&gt;</code></p>
+<h2>숨김 형태 인풋</h2>
+<p>아무것도 보이지 않는 형태.<br>폼에 정보를 전송할 때 사용자가 입력한 정보 외에 정보들을 보이지 않게 함께 전송할 때 사용<br><code>&lt;input type=&quot;hidden&quot; name=&quot;abc&quot; value=&quot;something&quot; /&gt;</code></p>
+<h2>input 요소의 속성들</h2>
+<p>type 속성외에 자주 사용되는 속성들.<br>대부분 속성이 값 없이 선언하는 것만으로 적용된.</p>
+<h2>disable 속성</h2>
+<p>모든 타입 공통 속성.<br>input 요소 뿐 아니라 모든 폼 요소들이 사용가능한 속성.<br>사용하면 해당 요소를 비활성화 시킨다.<br><code>&lt;input type=&quot;text&quot; value=&quot;nothing&quot; disabled /&gt;</code></p>
+<h2>readonly 속성</h2>
+<p>text, textarea 요소에 사용된다.<br>텍스트를 읽기만 가능하도록 한다.<br><code>&lt;input type=&quot;text&quot; value=&quot;&quot; readonly=&quot;readonly&quot; /&gt;</code></p>
+<h2>size 속성</h2>
+<p>text 타입에 해당하는 인풋 요소에만 해당하는 속성<br>해당 요소의 너비를 지정한다.<br><code>&lt;input type=&quot;text&quot; size=&quot;5&quot; /&gt;</code><br>css 로 처리 가능하다.</p>
+<h2>maxlength 속성</h2>
+<p>text 타입에만 사용 가능.<br>글자수 제한 속성 값<br><code>&lt;input type=&quot;text&quot; maxlength=&quot;10&quot; /&gt;</code></p>
+<h2>checked 속성</h2>
+<p>checkbox, radio 타입에만 쓸 수 있다.<br>기본 값으로 선택되도록 보여줌.<br><code>&lt;label for=&quot;radio-1&quot;&gt; &lt;input type=&quot;radio&quot; name=&quot;agree id=&quot;radio-1&quot; value=&quot;1&quot; /&gt; 예 &lt;/label&gt;</code><br><code>&lt;label for=&quot;radio-1&quot;&gt; &lt;input type=&quot;radio&quot; name=&quot;agree id=&quot;radio-1&quot; checked=&quot;checked&quot; value=&quot;1&quot; /&gt; 예 &lt;/label&gt;</code></p>
+<h2>select 요소, option 요소</h2>
+<p>select 요소는 사용자가 폼에서 사용할 수 있는 옵션의 목록을 보여주는 폼 요소<br>radio 인풋과 비스하지만, select 는 서택된 한 가지만 보여준다.<br>그리고 여러개 선택할 수도 있다.<br>select 요소는 한 개 이상의 optin 요소를 가지고 있다.<br>사용자는 option 을 선택하고 그 요소 값이 서버에 전송됨.<br><code>&lt;select name=&quot;score&quot; id=&quot;select-id&quot;&gt;</code><br><code>&lt;option value=&quot;a&quot;&gt;A&lt;/option&gt;</code><br><code>&lt;/select&gt;</code></p>
+<h2>select 요소의 속성</h2>
+<p>다른 폼 요소와 마찬가지로 disabled, name 속성을 사용할 수 있다.<br>select 요소만의 속성이 몇가지 있음.</p>
+<h2>multiple 속성</h2>
+<p>기본적으로 option 을 하나만 선택할 수 있지만 여러개 선택할 수 있게 한다.<br>ctrl, shitf 등을 누르거나 드래그로 가능<br><code>&lt;select multiple=&quot;multiple&gt; &lt;/select&gt;</code></p>
+<h2>size 속성</h2>
+<p>option 을 몇개 노출할것인지 정하는 속성.<br>기본적으로 노출 수는 1, multiple 속성이 있을 땐 4 개가 기본값.<br><code>&lt;select size=&quot;3&quot;&gt; &lt;/select&gt;</code></p>
+<h2>option 요소의 속성과 optgroup</h2>
+<p>내부에 다른 요소를 포함할 수 없고 텍스트만 포함할 수 있다.<br><code>&lt;select&gt; &lt;option&gt; &lt;/option&gt; &lt;/select&gt;</code></p>
+<h2>optgroup 은 option 요소들을 그룹화 해준다.</h2>
+<p>label 속성으로 그룹의 명칭을 지어준다.<br><code>&lt;optgroup&gt; &lt;option&gt; &lt;/option&gt; &lt;/optgroup&gt;</code></p>
+<h2>button 요소</h2>
+<p>input 요소의 submit, reset, button 타입 속성들은 버튼 형태였다.<br>모두 이 button 요소로 대체 가능하다.<br><code>&lt;button type=&quot;submit&quot;&gt; submit &lt;/button&gt;</code><br>등으로 요소 이름을 바꿔준다.<br>type 을 명시하지 않으면 기본값으로 reset 타입으로 동작함.<br>input 과 차이점은, input 은 스스로 닫는태그, button 은 열고 닫는 태그라는 점.<br>그래서 span, img 같은 인라인 요소를 안에 포함할 수 있다.<br>css 로 스타일을 줄 때 더 다양한 스타일이 가능해 진다.<br><code>&lt;button type=&quot;button&quot;&gt; &lt;인라인 요소&gt; &lt;/&gt; &lt;/button&gt;</code></p>
+<h2>fieldset 요소와 legend 요소</h2>
+<p>fieldset 요소는 폼 요소들을 그룹핑, 그룹의 이름은 legent 요소로 지어진다.<br>스크립트에서 접근 시 보다 용이하게 만들어준다.<br>또 사용자 접근성도 높여 준다.<br><code>&lt;fieldset&gt;</code><br><code>&lt;legend&gt; 로그인 &lt;/legend&gt;</code><br><code>&lt;/fieldset&gt;</code><br>legent 요소는 fieldset 요소의 첫번쨰 자식으로 사용해야 하며 인라인 요소를 포함할 수 있음.<br>fieldset 요소는 자식으로 fieldset 요소를 중첩할 수도 있음.</p>

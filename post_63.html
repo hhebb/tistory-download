@@ -1,0 +1,30 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 3</p>
+<h2>유형</h2>
+<p>동적 계획법</p>
+<h2>특이사항</h2>
+<p>기초 DP 문제</p>
+<p><span style="color: #333333;">삼각형 끝에서 예외처리 해줘야 함.</span></p>
+<h2>총평</h2>
+<p>평이함.</p>
+<p>예외처리는 어렵지 않았음.</p>
+<p>&nbsp;</p>
+<pre id="code_1601123365938" class="python" data-ke-language="python" data-ke-type="codeblock"><code>cache = [[0] * i for i in range(1, 501)]
+
+def solution(triangle):
+    answer = 0
+    cache[0][0] = triangle[0][0]
+    
+    for row in range(1, len(triangle)):
+        for col in range(row+1):
+            if col == 0:
+                cache[row][col] = cache[row-1][col] + triangle[row][col]
+            elif col == row:
+                cache[row][col] = cache[row-1][col-1] + triangle[row][col]
+            else:
+                cache[row][col] = max(cache[row-1][col-1], cache[row-1][col]) + triangle[row][col]
+        
+    answer = max(cache[len(triangle) - 1])
+    return answer</code></pre>

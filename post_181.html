@@ -1,0 +1,67 @@
+<h2>강한 결합 요소</h2>
+<ul>
+<li><p>타잔, 코사라주 알고리즘<br>  코사라주가 더 쉽지만 적용은 타잔이 더 쉽다.</p>
+</li>
+<li><p>개념</p>
+<p>  서로 긴밀하게 강하게 결합된 정점 집합<br>  SCC<br>  같은 SCC 에 속하는 두 정점은 서로 도달 가능하다.</p>
+</li>
+<li><p>비고<br>  사이클이 발생하면 항상 SCC 가 있다.<br>  그래서 방향그래프일때만 의미가 있다.<br>  무향 그래프면 무조건 SCC 이므로 별 의미가 없다.</p>
+</li>
+</ul>
+<h2>타잔 알고리즘</h2>
+<ul>
+<li><p>개념</p>
+<p>  모든 정점에 대해 DFS 를 돌린다.<br>  union find 원리가 적용된다.<br>  트리라고 생각했을 때, 부모로 돌아올 수 있다면 그 사이는 모두 SCC 에 속한다는 아이디어.<br>  사이클을 감지하는 과정과 유사하다.</p>
+</li>
+<li><p>비고</p>
+<p>  시간 복잡도는 $O(V+E)$<br>  부모 노드 초기화 과정을 개선하고 코드수를 줄일 수 있을 듯 하다.<br>  각 강 결합요소를 하나의 노드로 간주하고 위상 정렬할 수 있다.<br>  DAG 이므로.</p>
+</li>
+</ul>
+<pre><code># 강한 결합 요소
+from collections import deque
+
+_id = 0
+parents = [0] * len(graph)             # 각 노드의 부모 저장. 개선의 여지.
+finished = [False] * len(graph)     # 판단이 끝난 노드들
+stack = deque()                     # SCC 를 찾기 위해 dfs 수행중인 노드들을 저장하는 스택
+SCC = []                              # 전체 SCC 집합
+
+# 노드 갯수 만큼 dfs 수행
+def dfs(here):
+    global _id
+    _id += 1
+    parents[here] = _id                # here 노드의 부모 설정. 방문하지 않은 노드에 대한 초기화의 개념이다. 
+    stack.append(here)              # 스택에 자신을 삽입
+    parent = parents[here]             # 부모값을 설정
+    for there in graph[here]: 
+
+        # 방문하지 않은 노드에 대한 처리
+        if parents[there] == 0:
+            parent = min(parent, dfs(there))
+
+        # 방문은 했지만 처리 중인 즉, dfs 수행중인 노드
+        # 이는 뒤로 퇴각할 때 거친다.
+        elif not finished[there]:
+            parent = min(parent, parents[there])
+
+    # 부모 노드가 자신인 경우
+    # 이는 마지막 단계일 때 거친다.
+    if parent == parents[here]:
+        scc = []
+
+        while stack:
+            s = stack.pop()
+            scc.append(s)
+            finished[s] = True
+            if s == here:
+                break
+        SCC.append(scc)
+
+    return parent
+
+# 실행 단계
+for i in range(1, len(graph)):
+    if parents[i] == 0:
+        dfs(i)
+for i in range(len(SCC)):
+    print(SCC[i])</code></pre>

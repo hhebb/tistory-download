@@ -1,0 +1,174 @@
+<h1>필수 문법</h1>
+<h2>브라우저</h2>
+<ul>
+<li>Element 탭<br />html 구조 나타남.<br />하단에 style 도 볼 수 있음.<br />화면 디버깅 용</li>
+<li>Console 탭<br />js 콘솔.</li>
+<li>Source 탭<br />파일, 스크립트 등 볼 수 있음.<br />watch 하위 탭에서 코드 변화 포커스 가능<br />브레이크 포인트 설정해서 단계별 관찰 가능<br />변수 스코프도 찾을 수 있다.</li>
+<li>Network 탭<br />파일 로드하는 것을 볼 수 있음.</li>
+</ul>
+<h2>원시 자료형</h2>
+<ul>
+<li>불변 자료형</li>
+<li>pass by value</li>
+</ul>
+<h2>원시 자료형 종류</h2>
+<ul>
+<li>Number<br />숫자 자료형<br />정수 구분없이 모든 실수</li>
+<li>String</li>
+<li>boolean</li>
+<li>null<br />아무것도 없음을 명시하는 타입<br />변수는 있는데 비어있다고 명시</li>
+<li>undefined<br />할당되지 않았을 때 초기화하는 타입 값<br />존재하지 않는 객체를 나타냄.<br />진짜 없는 것.</li>
+</ul>
+<h2>Object</h2>
+<ul>
+<li>변경 가능</li>
+<li>pass by reference</li>
+<li>키-값으로 매칭되는 자료</li>
+<li>프로퍼티에 값 또는 함수가 포함.</li>
+<li>키 값은 string 으로 나타날 수 있어야 함.</li>
+<li><code>:</code> 으로 키 - 값을 구분한다. <code>=</code> 아니라.</li>
+<li>동적으로 프로퍼티 키 추가 및 삭제 가능</li>
+<li><code>Object.keys(_obj)</code>- 키만 빼낼 수 있음.</li>
+</ul>
+<h2>연산자</h2>
+<ul>
+<li>동등/비동등<br /><code>==</code>, <code>!=</code><br />형 변환후 비교<br />사용하지 말것</li>
+<li>일치/비일치<br />타입까지 비교<br /><code>===</code>, <code>!==</code></li>
+<li>타입 연산<br /><code>typeof</code></li>
+</ul>
+<h2>제어문</h2>
+<ul>
+<li><code>if(){}</code><br />조건식에 일치 연산자(<code>===</code>, <code>!==</code>) 사용 권고</li>
+<li>switch 문도 있음.</li>
+<li>삼항 연산자</li>
+</ul>
+<h2>반복문</h2>
+<ul>
+<li><code>for(;;)</code></li>
+<li>while</li>
+</ul>
+<h2>함수</h2>
+<ul>
+<li><code>function</code> 키워드로 작성</li>
+<li>함수 선언, 함수 표현식 등.</li>
+<li>즉시 실행 함수<br />함수를 소괄호() 로 묶고 () 로 호출한다.<br />익명으로 만든다.</li>
+</ul>
+<h2>생성자 함수</h2>
+<ul>
+<li><code>new Func()</code> 연산자로 객체를 생성시킬 수 있는 함수</li>
+<li><code>this</code> 는 객체 자신을 가리킨다.<br />그리고 그 프로퍼티는 public 접근자가 된다.</li>
+</ul>
+<h2>JS 함수 특징</h2>
+<ul>
+<li>1 급 객체</li>
+<li>함수 인자, 변수 대입, 반환 가능.</li>
+</ul>
+<h2>스코프</h2>
+<ul>
+<li>함수 스코프는 함수 밖에 선언되면 전역</li>
+<li>블럭 스코프는 블럭 밖에서 선언되면 전역</li>
+<li><code>var</code> 는 함수 스코프<br />중복선언도 되어서 위험</li>
+<li><code>const</code>, <code>let</code> 은 블럭 스코프</li>
+<li>결과적으로 var 는 사용 금지, 되도록 const 사용, 필요에 따라 let 사용</li>
+<li>전역 변수를 줄이는 게 좋다.</li>
+<li>개발자도구의 source 탭에서 스코프 확인 가능</li>
+</ul>
+<h2>THIS</h2>
+<ul>
+<li>binding<br />함수와 그 함수를 호출한 객체를 연결하는 링크</li>
+<li>전역 객체<br />window 객체(브라우저), global 객체(node)<br />전역 함수, 변수는 전역 객체에 바인딩 된다.<br />즉, 전역 객체의 프로퍼티이다.</li>
+<li>일반적인 함수의 this 는 전역 객체</li>
+<li>객체의 메서드는 해당 객체에 this 가 바인딩 된다.</li>
+<li>생성자 함수의 this 는 생성되는 객체에 바인딩 된다.</li>
+<li>내부 함수, 콜백 함수 무조건 전역객체에 바인딩 된다.<br />설계상 오류<br />apply, call, bind 로 해결<br /><code>method.bind(this)()</code> 으로 가능. <code>method()</code> 대신에.</li>
+</ul>
+<h2>DOM</h2>
+<ul>
+<li>DOM 트리 요소에 접근하고 조작할 수 있음.<br />객체 형식으로 취득할 수 있다.</li>
+<li><code>document.getElementById(_id)</code> - id 로 요소 반환받는다.</li>
+<li><code>document.getElementByName(_name)</code> - input 의 name 속성? 으로 찾는다.</li>
+<li><code>document.getElementsByTagName(_tag)</code> - tag 로 모든 요소 반환받는다.<br />노드의 컬렉션으로 받는다.</li>
+<li><code>elemetn.getAttribute(_attr)</code> - 요소의 속성 반환받는다.</li>
+<li>`element.setAttribute(_attr, _val) - 요소의 속성을 셋팅한다.</li>
+<li><code>innerHTML</code> - html 코드를 삽입 가능</li>
+</ul>
+<h2>콜백</h2>
+<ul>
+<li>JS 는 콜 스택과 이벤트 큐를 이용해 비동기처럼 동작한다.</li>
+<li>순서를 보장하기 위해 콜백을 사용한다.</li>
+<li>함수를 인자로 받아서 어떤 이벤트 이후 특정 시점에 실행되게 할 수 있음<br />타이밍 맞추기, 순서 보장하기 등의 효과를 본다.</li>
+</ul>
+<hr />
+<h1>ES6</h1>
+<h2>템플릿 리터럴</h2>
+<ul>
+<li>문자열을 더 편리하게 사용</li>
+<li>백틱 `` 을 사용한다.</li>
+<li>안에 <code>${_}</code> 를 사용하여 변수를 집어넣거나 표현식을 편하게 집어넣을 수 있다.</li>
+<li>삼항 연산자도 물론 가능.</li>
+</ul>
+<h2>화살표 함수</h2>
+<ul>
+<li>함수 축약 표현</li>
+<li>함수 이름 없이 사용 가능.</li>
+<li>암묵적으로 반환을 한다.</li>
+<li>화살표 함수 this 는 자신의 외부 스코프에 의해 결정이 된다.</li>
+<li>콜백에 자주 쓰이지만, this 스코프를 주의해야 한다.</li>
+</ul>
+<h2>배열</h2>
+<ul>
+<li>JS 에서 배열은 배열을 흉내낸 것이다.<br />실제로 typeof 찍으면 object 로 나옴</li>
+<li><code>length</code> - 배열의 길이<br />빈 배열에 인덱스 지정하여 할당하면 그 인덱스 크기만큼 빈 것을 포함하여 할당이 된다.</li>
+<li><code>arr.push()</code>, <code>arr.pop()</code> - 배열의 끝에 넣거나 빼기. 여러개 가능</li>
+<li><code>arr.unshift()</code> <code>shift()</code> - 배열의 처음에 넣거나 빼기. 여러개 가능</li>
+<li><code>arr.concat()</code> - 배열을 늘린 후 새로운 배열을 반환. 기존 배열 건드리지 않음.</li>
+<li><code>arr.forEach(func(item))</code> - 순회함. 따로 반환은 안 하고 순회하며 함수 실행.</li>
+<li><code>arr.map(func(item)</code> - forEach 처럼 순회하며 함수를 실행하는데 값을 반환함.</li>
+<li><code>arr.filter(condition(item))</code> - 조건에 맞게 필터링되어 새로운 배열을 반환</li>
+<li><code>for(const i in arr)</code></li>
+<li><code>for(const i of arr)</code></li>
+</ul>
+<h2>디스트럭쳐링</h2>
+<ul>
+<li>객체나 배열을 원소별로 쪼개서 가져온다.</li>
+<li>객체일 때 키를 골라서 가져온다.<br /><code>const { key1, key2, key3 } = obj</code><br /><code>const { key1:name1, key2:name2, key3:name3 } = obj</code> - 새로운 변수로 지정하여 디스트럭쳐링<br /><code>const { key1, key2, key3:{nest_key} } = obj</code> - 중첩 오브젝트일 때, 내부의 키에 해당하는 프로퍼티를 가져온다.<br /><code>const { key1:name1, key2:name2, key3:{nest_key:name3} } = obj</code> - 중첩 오브젝트, 새로운 변수로 지정하여 디스트럭쳐링</li>
+<li>배열일 땐 그냥 할당한다.<br /><code>const [a, b, c] = arr</code></li>
+</ul>
+<h2>spread</h2>
+<ul>
+<li>iterable 을 풀어헤친다.</li>
+<li>객체에 다른 객체를 추가한다.<br /><code>const obj { ...other, const a}</code> - other 객체 받고 a 추가</li>
+<li>배열에도 마찬가지<br /><code>const newArr = [...arr1, ...arr2]</code></li>
+</ul>
+<h2>rest</h2>
+<ul>
+<li>함수의 인자로 줄 때 사용<br /><code>func(...rest)</code><br />rest 는 배열로 받아들여진다.</li>
+</ul>
+<h2>class</h2>
+<ul>
+<li>프로토타입으로 클래스를 구현함.</li>
+<li><code>constructor(_param){}</code><br />초기화 함수.<br />안에는 변수만 설정한다.<br /><code>this.variable = _</code> 형식으로.<br />this 는 이 객체.</li>
+<li>몸체에는 메서드만 가능</li>
+<li>상속은 extends 사용</li>
+<li>자식만의 속성을 가지려면 반드시 먼저 <code>super()</code> 호출</li>
+</ul>
+<h2>모듈</h2>
+<ul>
+<li>모듈 내보내기는 <code>export</code> 문법<br /><code>export function(){}</code><br /><code>export const a = 1</code><br />`export {_var, _func} - 선언부와 떨어져 있을 때<br />등등 객체, 함수, 변수 등을 내보낸다.</li>
+<li>가져오기는 <code>import</code> 문법<br /><code>import {_var} from './test.js'</code></li>
+</ul>
+<h2>예외 처리</h2>
+<ul>
+<li>try<br />예외가 날 것 같은 문을 감싼다.<br />에러가 나면 에러 객체를 만들고 catch 로 간다.</li>
+<li>catch<br /><code>catch(e)</code> - e 는 에러 객체<br /><code>e.name</code>, <code>e.message</code> 등으로 잘라서 볼 수 있다.</li>
+<li>finally<br />무조건 실행되는 문.<br />에러가 나든 안나든 어쨌든 처리해줌.</li>
+<li>throw<br />고의로 예외 상황을 발생시키고 에러 객체를 만들어 catch 로 던진다.<br />try 안에다가 보통 작성한다.<br /><code>throw new Error(_custom error)</code></li>
+</ul>
+<h2>Promise, async/await</h2>
+<ul>
+<li>비동기 프로그래밍에 유용하게 쓰인다.</li>
+<li>콜백을 쓰면 콜백 헬이 주로 나타난다.</li>
+<li>promise 객체를 생성해서 비동기 처리될 대상을 넣어준다.<br />promise 는 약속.<br />비동기 처리에서 순서를 보장하겠다는 약속.<br /><code>new Promise( (resolve, reject) =&gt; {})</code><br />인자로는 resolve, reject 를 인자로 받는 함수를 받는다.<br />그 함수는 비동기 작업이 필요한 함수다.</li>
+<li>async<br /><code>async function(){}</code><br />항상 promise 를 반환한다.</li>
+<li>await<br />async 함수 안에서만 동작한다.<br /><code>await _asyncFunc()</code> - 여기에 promise 가 있다.<br />await 만나면 완료될 때까지 대기.<br />완료되면 다음 라인 수행하여 순서를 보장함.</li>
+</ul>

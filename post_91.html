@@ -1,0 +1,60 @@
+<h1>그래프 탐색</h1>
+<p>아주 기본적인 그래프 탐색 알고리즘이다.<br>활용도를 넘어서 문제에 출제가 잘 되니 아예 외우고 있어야한다.<br>외우는 것을 넘어서 자유자재로 변형할 수 있어야 한다.</p>
+<p>그래프라는 제너럴한 비선형 자료구조를 탐색하는 것은 거의 모든 문제를 풀 수 있게 해준다.<br>리스트를 하나씩 검사하는 작업을 그저 확장한 것이라고 보면 된다.<br>비선형이라서 이진 탐색같은 효율적인 탐색법은 찾기 힘들어 무식하게 다 찾는 수 밖에 없다.<br>그러나 하나하나 다 방문하고 다시 퇴각하는 과정에서 정말 다양한 작업들을 할 수 있다.<br>최단 경로를 뽑아내는 작업, 방향성 그래프에서 사이클을 감지하는 작업 등이 포함된다.</p>
+<p>특히 bfs 는 queue 대신 heap 과 함께 쓰이면 다양한 일을 효율적으로 할 수 있다.<br>heap 자체가 queue 를 대신하여 많은 작업에 효율적으로 쓰이기도 한다.</p>
+<h2>BFS</h2>
+<ul>
+<li>개념 - 너비 우선 탐색으로 시작점에서 가까운 노드부터 방문하며 탐색.<br>큐를 사용한다.</li>
+<li>비고 - check 여부를 쓰는 대신 현재까지 전체 결과값을 사용하면 더 깔끔하다.</li>
+</ul>
+<pre><code># check 변수를 이용해 중복방문 방지한 방식.
+# 이렇게 하면 방문순서를 따로 반환할 떄 추가적인 작업이 필요하다.
+def BFS(start):
+    check = {i:False for i in graph}
+    q = deque(start)                    # 큐 초기화
+    while q:
+        here = q.popleft()                # 현재 노드 찍기
+        check[here] = True
+        for there in graph[here]:        # 현재 노드에 연결된 다음 노드들에 대해 체크
+            if not check[there]:
+                check[there] = True
+                q.append(there)
+    return</code></pre><pre><code># check 변수 안쓰고 result 를 사용해 중복을 체크하고, 순서까지 저장할 수 있다.
+def BFS(start):
+    visited = deque(start)
+    q = deque(start)
+    while q:
+        here = q.popleft()
+        for there in graph[here]:
+            if there not in visited:
+                q.append(there)
+                visited.append(there)
+    return visited</code></pre><h2>DFS</h2>
+<ul>
+<li>개념 - 깊이 우선 탐색으로 시작점에서 한 방향으로 계속 파고 들어가며 방문 탐색한다.<br>주로 재귀를 이용하면 간단한데, 스택으로 완벽히 동일하게 작성할 수 있다.<br>재귀 호출 제약이 우려되면 스택으로 구현한다.</li>
+<li>비고 - 마찬가지로 결과 result 를 이용하면 중복여부와 결과값 반환을 겸용할 수 있다.</li>
+</ul>
+<pre><code># 재귀 사용 DFS
+
+result = deque()
+def DFS(start):
+    result.append(start)
+    for there in graph[start]:            # 현재 노드에 연결된 다음 노드들에 대해 체크
+        if there not in result:
+            DFS(there)                    # 다음 노드에 대해 DFS 를 돌려서 파고 들어가며 탐색.
+    return result</code></pre><pre><code># 스택 사용 DFS
+
+def DFS(start):
+    stack = deque(start)
+    result = deque()
+    while stack:
+        here = stack.pop()
+        if here in result:
+            continue
+        result.append(here)
+        for there in graph[here][::-1]:
+            if there not in result:
+                stack.append(there)
+    return result
+
+DFS(&#39;A&#39;)</code></pre>

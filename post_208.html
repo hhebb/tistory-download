@@ -1,0 +1,199 @@
+<p>공식문서 읽다가 이해 안되는 게 있어서<br>강의를 듣는다.<br>내용은 동일한데 풀어서 설명해준다.</p>
+<h1>리액트</h1>
+<h2>리액트란</h2>
+<ul>
+<li>리액트는 UI 화면을 위한 JS 라이브러리.</li>
+<li>웹페이지를 쉽게 만들 수 있다.</li>
+<li>즉, 프론트엔드 라이브러리.</li>
+<li>프레임워크 아님.</li>
+</ul>
+<h2>특징</h2>
+<ul>
+<li>virtual Dom 을 사용</li>
+<li>실제 DOM 과 웹페이지 중간의 매개체</li>
+<li>DOM 을 직접 수정하지 않고 최소한 업데이트할 것만 조작함.</li>
+<li>컴포넌트 기반으로 제작.</li>
+<li>가장 핵심이 되는 개념.</li>
+</ul>
+<h2>JSX</h2>
+<ul>
+<li>JS 확장</li>
+<li>JS 에다가 태그 등으로 확장함.</li>
+<li>필수는 아님.</li>
+<li>간결한 코드 사용 가능</li>
+<li>React.creatElement 로 대체해도 되지만 더 코드가 많아짐</li>
+<li>중요한것은 injection 공격을 방지할 수 있다.<br>  리액트 돔은 렌더링 전에 문자열로 바꾸므로 안전하다?<br>  XSS 방어 가능</li>
+<li>JSX 문은 하나의 element 를 나타낸다.<br>  element 는 DOM 을 만드는데 사용한다.<br>  항상 최신 상태를 유지한다!</li>
+</ul>
+<h2>JSX 사용법</h2>
+<ul>
+<li>JSX 안에 {} 로 JS 삽입 가능. 변수, 함수 호출</li>
+<li>큰 따옴표 사이에 문자열 가능</li>
+<li>하나의 element 는 전체가 하나를 감싸고 자식은 여러개가 가능함.</li>
+</ul>
+<h2>elements</h2>
+<ul>
+<li>리액트를 구성하는 가장 작은 블럭</li>
+<li>화면에서 보이는 것들을 기술한다.</li>
+<li>변경 불가능하다.<br>  element 생성 후 자식이나 속성을 바꿀 수 없다.</li>
+</ul>
+<h2>element 렌더링</h2>
+<ul>
+<li>root 돔 노드. 단 하나만 있다.</li>
+<li>하지만 여러 개의 리액트 앱을 연동하면 여러 개가 있다.</li>
+<li>ReactDom.render 로 element 로 렌더링한다.</li>
+<li>element 는 변경되지 않으므로, 매번 새로 생성해서 렌더링 할 수 있다.<br>  가상 DOM 은 변경부분만 반영한다는 것을 인지</li>
+</ul>
+<h2>components</h2>
+<ul>
+<li>컴포넌트는 리액트를 구성하는 요소</li>
+<li>페이지는 컴포넌트로 이루어진다.</li>
+<li>입력과 출력이 있는 함수와 유사함.<br>  입력은 props, 출력은 element</li>
+<li>클래스의 개념과 유사. 객체는 element</li>
+</ul>
+<h2>property</h2>
+<ul>
+<li>컴포넌트의 속성</li>
+<li>컴포넌트에 들어갈 데이터들</li>
+<li>read only 이다.</li>
+<li>모든 리액트 컴포넌트는 프로퍼티에 대해서 순수 함수 역할을 해야한다.<br>  순수 함수는 함수 안에서 입력 인자를 바꾸지 않는 것.<br>  같은 프로퍼티에 대해 같은 결과를 보여주라는 의미.</li>
+</ul>
+<h2>컴포넌트 생성</h2>
+<ul>
+<li>함수형, 클래스형 2 가지 방법이 있다.</li>
+</ul>
+<h2>함수형 컴포넌트</h2>
+<ul>
+<li>JS 함수와 유사함.</li>
+<li>인자로 프로퍼티, 반환으로 element</li>
+</ul>
+<h2>클래스형 컴포넌트</h2>
+<ul>
+<li>class 문법으로 컴포넌트 생성.</li>
+<li>항상 대문자로 시작해야 함.</li>
+<li>소문자로 적으면 DOM 태그로 인식한다.</li>
+<li>JSX 쓸 때 기본 태그냐, 컴포넌트나 구분을 위함.</li>
+</ul>
+<h2>컴포넌트 렌더링</h2>
+<ul>
+<li>컴포넌트는 엘리먼트를 반환하므로 그 값을 반환받아 리액트 render 함수에 넣어준다.</li>
+</ul>
+<h2>컴포넌트 합성</h2>
+<ul>
+<li>컴포넌트 안에 컴포넌트를 중첩 가능.</li>
+<li>복잡한 화면을 컴포넌트의 조합으로 구성한다.</li>
+</ul>
+<h2>컴포넌트 추출</h2>
+<ul>
+<li>컴포넌트 하나하나가 너무 크면 안됨</li>
+<li>적당히 기능별로 나누어야 한다.</li>
+<li>핵심은 재사용성이므로 컴포넌트를 잘 조각내는 것이 중요하다.</li>
+</ul>
+<h2>state</h2>
+<ul>
+<li>리액트 컴포넌트(데이터)의 상태</li>
+<li>변경 가능한 데이터를 의미함.</li>
+<li>사용자가 state 를 정의한다.</li>
+<li>클래스 constructor 안에 오브젝트로 만든다.</li>
+<li>렌더링이나 데이터 흐름에 사용되는 값만 변경할 수 있도록 한다.<br>  아니면 정적인 데이터로 설정해준다.<br>  만약 그렇지 않으면 렌더링하는데 쓸데없는 오버헤드가 발생한다.</li>
+<li>정체는 JS 객체.</li>
+<li>state 는 직접 수정을 하면 안된다.</li>
+<li>리액트가 관리할 것이므로. setState 을 사용해야 함.</li>
+<li>state 가 변경되면 자동으로 렌더링이 갱신된다.</li>
+</ul>
+<h2>lifecycle</h2>
+<ul>
+<li>컴포넌트의 주기</li>
+<li>컴포넌트 클래스 안에 오버라이드 한다.</li>
+<li>mounting - 최초 생성</li>
+<li>updating - 업데이트</li>
+<li>unmounting - 제거될 때</li>
+</ul>
+<h2>이벤트</h2>
+<ul>
+<li>DOM 에도 이벤트가 있고 react 에도 있다.</li>
+<li>JSX 에서는 {} 안에 이벤트 함수를 연결함.</li>
+</ul>
+<h2>이벤트 핸들러</h2>
+<ul>
+<li>리스너라고도 한다. 콜백.</li>
+<li>class field syntax 사용 등 여러가지 방법</li>
+</ul>
+<h2>이벤트 함수에 인자 전달</h2>
+<ul>
+<li>화살표 함수 방법, binding 방법.</li>
+</ul>
+<h2>element variable</h2>
+<ul>
+<li>리액트 엘리먼트를 변수처럼 사용.</li>
+<li>JSX 에 컨텐츠로 {} 안에 리액트 엘리먼트 사용.</li>
+</ul>
+<h2>inline 조건</h2>
+<ul>
+<li>논리 연산자나 삼항 연산자를 통해 작성.</li>
+</ul>
+<h2>렌더링 막기</h2>
+<ul>
+<li>null 리턴하면 됨.</li>
+<li>컴포넌트 안에서 프로퍼티의 조건에 따라 null 을 반환하는 창구를 만든다.</li>
+</ul>
+<h2>리스트</h2>
+<ul>
+<li>리스트와 연동이 된다.</li>
+<li>ul 태그에 배열을 넣으면 된다.</li>
+<li>주로 map 함수를 활용함.</li>
+</ul>
+<h2>key</h2>
+<ul>
+<li>리스트 map 함수 쓸 때 key 를 지정해줘야 함.</li>
+<li>고유한 값을 사용하는 것이 좋다.</li>
+<li>인덱스나 변수값, id 등을 key 값으로 사용한다.</li>
+<li>key 는 prop 에 전달되지 않는다!</li>
+</ul>
+<h2>JSX 안에 map 을 넣기</h2>
+<ul>
+<li>더 간단하게 표현 가능.</li>
+</ul>
+<h2>Forms</h2>
+<ul>
+<li>사용자 입력 처리.</li>
+<li>리액트에선 controlled component 라고 한다.</li>
+<li>리액트의 통제를 받는 input form element 이다.</li>
+<li>html form 과 달리 모든 데이터는 state 에서 관리<br>  setState() 메서드로 상태 변경<br>  html 은 자체적으로 관리</li>
+<li>사용자의 입력을 제어할 수 있다. handleChange 에서</li>
+<li>value 를 state 에서 가져온다!</li>
+<li>file input 은 읽기만 가능하므로 uncontolled component 이다.</li>
+</ul>
+<h2>Lifting State Up</h2>
+<ul>
+<li><h2>Shared State</h2>
+</li>
+<li><p>state 에 있는 데이터를 여러개의 하위 컴포넌트에서 공통적으로 사용하는 경우</p>
+</li>
+<li><p>부모 자식 관계가 아니라 공유 데이터를 가지는 것.</p>
+</li>
+<li><p>하지만 공통 state 를 다루기 위해 공통 상위 컴포넌트로 끌어올려준다.</p>
+</li>
+<li><p>데이터를 공유하면 각자 따로 가질 필요가 없다.</p>
+</li>
+</ul>
+<h2>composition vs inheritance</h2>
+<ul>
+<li>composition 은 컴포넌트를 합성</li>
+<li>inheritance 는 상속</li>
+</ul>
+<h2>composition 사용</h2>
+<ul>
+<li>containment.</li>
+<li>children prop 으로 하위 컴포넌트를 포함하게 한다.</li>
+<li>specializatin.</li>
+<li>기존엔 특수화를 상속으로 구현했지만 리액트는 합성으로 구현함!</li>
+<li>prop 을 추가로 전달하면 특수화.</li>
+</ul>
+<h2>inheritance 사용</h2>
+<ul>
+<li>다른 컴포넌트로부터 상속받아 새로운 컴포넌트를 만드는 것.</li>
+<li>상속은 솔직히 별로 도움이 안된다.</li>
+<li>그냥 composition 써라.</li>
+<li>컴포넌트 쪼개고 잘 합쳐서 재사용하는 게 좋다.</li>
+</ul>

@@ -1,0 +1,55 @@
+<h1>3 강</h1>
+<ul>
+<li>소켓 프로그래밍</li>
+</ul>
+<h2>app 계층</h2>
+<ul>
+<li>app 계층은 클라이언트와 서버의 프로그램(프로세스) 의 수준이다.</li>
+<li>사용자 혹은 app 개발 수준에 해당.</li>
+<li>OS 가 제공하는 소켓이라는 인터페이스를 이용해야 한다.</li>
+<li>소켓은 OS 에서 제공하는 것이다!</li>
+<li>OS 는 TCP, UDP 두 하위 계층을 기반으로 소켓을 지원한다.</li>
+<li>그래서 앱 개발자는 두 소켓 중 하나를 고를 수 밖에 없다.</li>
+</ul>
+<h2>소켓 종류</h2>
+<ul>
+<li>TCP 소켓<br>sock stream</li>
+<li>UDP 소켓<br>soak_dgram</li>
+</ul>
+<h2>소켓 함수 큰 그림 - TCP</h2>
+<ol>
+<li>서버가 소켓을 연다.</li>
+<li>특정 포트에 바인딩한다.</li>
+<li>listen 역할임을 명시한다.</li>
+<li>accept 로 받아들일 준비한다.<br>클라이언트로부터 요청을 받기 전까지 block 된다.</li>
+<li>클라이언트가 소켓을 연다.</li>
+<li>클라이언트가 accept 상태인 서버에게 connect 를 시도한다.<br>이 과정에서 3 way handshake 과정이 있다.</li>
+<li>이후에 관계가 형성되면 단순하게 데이터 주고 받는다.</li>
+</ol>
+<h2>socket 함수 - TCP 서버</h2>
+<ul>
+<li>int socket(int domain, int type, int protocal) return file_descriptor<br>중요한 것은 type - TCP 인지 UDP 인지.<br>id 같은 객체를 반환하고 이에 계속 접근한다.</li>
+<li>ind bind(int sockfd, struct sockaddr*myaddr, int addrlen) return success<br>주소는 ip 주소와 port 번호 포함.<br>바인드 성공 여부 반환<br>fd 는 생성한 소켓 객체.</li>
+<li>int listen(int sockfd, int backlog) return success<br>소켓의 상태를 변화시킨다.<br>listen 성공 여부 반환.<br>listen 은 non blocking 과정<br>backlog 는 최대 수용 클라이언트 수</li>
+<li>int accept(int sockfd, struct soakaddr*sliaddr, int* addrlen) return file_descriptor<br>연결을 시도한 클라이언트의 fd 를 반환한다.<br>accept 은 blocking 과정 - 끝날때까지 연결을 기다린다.<br>accept 는 호출한 순간 block</li>
+</ul>
+<h2>socket - TCP 클라이언트</h2>
+<ul>
+<li>int connect(int sockfd, struct sockaddr*servaddr, int addrlen) return success<br>connect 는 block 과정<br>연결 성공 여부를 반환<br>서버의 주소로 연결을 시도한다.<br>클라이언트는 특정 포트에 바인딩할 필요가 없다. 해도 상관은 없음.</li>
+</ul>
+<h2>socket - UDP</h2>
+<ul>
+<li>소켓 생성하고 연결없이 바로 보냄.</li>
+<li>데이터 교환이 끝나면 다른 프로세스가 사용할 수 있도록 소켓을 close 해준다.</li>
+</ul>
+<h2>주의</h2>
+<ul>
+<li>소켓을 가지고 있던 프로세스는 종료되어도 한동안 바이딩되어있던 포트를 OS 가 release 하지 않고 한동안 유지함!</li>
+<li>그래서 조금 기다리거나 다른 포트를 사용해야 함.</li>
+</ul>
+<h2>소켓으로 http 통신하기</h2>
+<ul>
+<li>http 는 app 계층이고 소켓으로 작성할 수 있다.</li>
+<li>http 의 프로토콜에 맞게 header 를 작성해서 connect 된 소켓에 write 하여 채워넣으면 된다.</li>
+<li>즉, GET / http://<strong><em>/</em></strong>.html 등으로 형식을 맞춰서 보내고 받도록 구현하면 된다.</li>
+</ul>

@@ -1,0 +1,44 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>완전 탐색</p>
+<h2>특이사항</h2>
+<p>소수 판별 지식이 있어야 함.<br>가능한 모든 경우를 체크해야하므로 순열조합이 필요<br>문자열에 0 이 앞에 있을 때 정수로 형변환시 알아서 0 이 떨어진다.<br>중복 제거에 set 사용함.</p>
+<h2>총평</h2>
+<p>소수 판별 모듈을 따로 만드는 것은 좋았음.<br>모든 경우를 체크하는 문제라는 것을 캐치함.<br>순열 사용시 중복되는 것이 생기는데, 집합 자료형을 적극 활용한 것은 좋았음.<br>단 더 좋은 소수 판별 알고리즘을 알아두는 게 좋을 듯 함.</p>
+<pre><code>from itertools import permutations
+
+def is_prime(n):
+    if n &lt; 2:
+        return False
+
+    if n == 2 or n == 3:
+        return True
+
+    for i in range(2, int(n/2) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def solution(numbers):
+    answer = 0
+    items = [num for num in numbers]
+    candidate = set()
+
+    # 모든 경우의 수에 대해 숫자 조합을 만들어 평가한다.
+    for cnt in range(1, len(numbers) + 1):
+        combi = permutations(items, cnt)
+        for com in combi:
+            eval_num = &#39;&#39;
+            for n in com:
+                eval_num += n
+
+            # 구해진 조합의 숫자로 소수 판별을 수행하면 됨.
+            candidate.add(int(eval_num))
+
+    for cand in candidate:
+        if is_prime(cand):
+            answer += 1
+    return answer</code></pre>

@@ -1,0 +1,109 @@
+<h1>17 강</h1>
+<p>탐욕 알고리즘 - 기초 문제 풀이</p>
+<h2>거스름돈</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 그리디</li>
+<li>핵심<ul>
+<li>전형적인 그리디. 화폐가 각 화폐의 배수이므로 무조건 큰 단위로 거슬러주면 최적의 해가 된다.</li>
+</ul>
+</li>
+</ul>
+<pre><code># 거스름돈
+cost = 1000 - int(input())
+answer = 0
+
+coin = [500, 100, 50, 10, 5, 1]
+
+for c in coin:
+    tmp = cost // c
+    answer += tmp
+    print(c, cost, tmp)
+    if tmp &gt; 0:
+        cost %= c
+
+print(answer, cost)</code></pre><h2>뒤집기</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 그리디</li>
+<li>핵심<ul>
+<li>둘 중 하나를 선택해야하는 문제.</li>
+<li>0, 1 둘 중 적은 덩어리를 구하면 된다.</li>
+<li>입력값은 백만이므로 시간 복잡도는 O(N) 에 해결해야함.</li>
+</ul>
+</li>
+<li>비고<ul>
+<li>내가 푼 것이 더 효율적인 듯하다.</li>
+<li>순차적으로 뒤집는 횟수를 세는 것보다 그냥 문자열 잘라서 처리하는 것이 간편하다.</li>
+</ul>
+</li>
+</ul>
+<pre><code># 뒤집기
+S = input()
+
+zero, one = 0, 0
+
+for c in S.split(&#39;1&#39;):
+    if c != &#39;&#39;:
+        zero += 1
+for c in S.split(&#39;0&#39;):
+    if c != &#39;&#39;:
+        one += 1
+
+print(min(zero, one))</code></pre><h2>등수 매기기</h2>
+<ul>
+<li>난이도 - 하</li>
+<li>유형 - 그리디</li>
+<li>핵심<ul>
+<li>전형적인 그리디 전략이 통하는 문제.</li>
+<li>각각의 차가 최소가 되면 전체 차의 합이 최소가 된다.</li>
+<li>각 차가 최소가 되게 하려면 예상 등수를 정렬하는 방법밖에 없다.</li>
+</ul>
+</li>
+</ul>
+<pre><code># 등수 매기기
+n = int(input())
+arr = []
+for _ in range(n):
+    arr.append(int(input()))
+
+arr.sort()
+answer = 0
+for idx, elem in enumerate(arr):
+    answer += abs(idx + 1 - elem)
+
+print(answer)</code></pre><h2>배</h2>
+<ul>
+<li>난이도 - 중</li>
+<li>유형 - 그리디</li>
+<li>핵심<ul>
+<li>매 분 마다 모든 크레인이 박스를 옮길 수 있도록 해준다.</li>
+<li>박스와 크레인을 모두 정렬하면 된다.</li>
+</ul>
+</li>
+<li>비고<ul>
+<li>생각을 하는데 오래 걸렸는데 결국 솔루션을 찾지 못했다.<br>무거운거 먼저 옮겨야하는건 당연한것인줄은 안다.<br>어떤 크레인은 박스를 옮길 수 없는 경우가 있는데<br>이 때 어떻게 로직을 처리할까에 대해 고민하다가 포기했다.<br>옮기지 못하면 그 다음부터도 쭉 못 옮기게 될텐데 그걸 무한루프에서 벗어나지 못한다는 착각을 했다.</li>
+</ul>
+</li>
+</ul>
+<pre><code># 배
+n = 3#int(input())
+limits = [6,8,9]#list(map(int, input().split()))
+m = 5#int(input())
+boxes = [2,5,2,9,9]#list(map(int, input().split()))
+
+limits.sort(reverse=True)
+boxes.sort(reverse=True)
+
+if limits[0] &lt; boxes[0]:
+    print(-1)
+t = 0
+while boxes:
+    for crane in limits:
+        for i_box, box in enumerate(boxes):
+            if box &lt;= crane:
+                boxes.pop(i_box)
+                print(crane, box)
+                break
+    t += 1
+print(t)</code></pre>

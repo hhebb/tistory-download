@@ -1,0 +1,63 @@
+<h2>용어 메모 용</h2>
+<ul>
+<li>OS 공부하다가 모호한 개념을 간략 정리</li>
+</ul>
+<hr />
+<h2>프로세스</h2>
+<ul>
+<li>코드</li>
+<li>데이터</li>
+<li>스택</li>
+<li>힙</li>
+<li>로 구성된다.</li>
+</ul>
+<h2>컨텍스트</h2>
+<ul>
+<li>프로세스의 각종 정보 - PCB 와 혼용하는듯?</li>
+<li>cpu 가 읽는 레지스터(SP, PC) 값과 연관됨.</li>
+</ul>
+<h2>컨텍스트 스위칭</h2>
+<ul>
+<li>실행 중이던 프로세스의 정보가 대기상태로 변한 후 메모리에 저장된다.</li>
+<li>메모리에서 대기 중이던 프로세스가 실행된다.</li>
+<li>즉, 메모리에 있던 것은 레지스터 등 CPU 를 할당받고, CPU 를 빼앗기면 메모리로 내쳐진다.</li>
+<li>이 과정이 합쳐지면 스위칭.</li>
+<li>스위칭하면 cpu 가 정지하므로 성능에 영향을 준다.</li>
+</ul>
+<h2>크리티컬 섹션</h2>
+<ul>
+<li>동시에 작업하면 안되는 곳.</li>
+<li>동시에 여러 스레드가 접근하면 원하는 결과를 얻지 못할 수도 있는 곳.</li>
+<li>mutex 를 위한 공간</li>
+</ul>
+<h2>스왑 디바이스</h2>
+<ul>
+<li>디스크를 메모리로 사용하는데, 대기 중인 프로세스를 저장</li>
+<li>가상 메모리를 사용할 때 사용하지 않는 페이지/세그먼트를 임시로 저장하는 곳.</li>
+</ul>
+<h2>가상 메모리</h2>
+<ul>
+<li>논리적인 메모리 주소를 사용하여 실제 물리적 메모리보다 더 많은 것처럼 사용.</li>
+<li>메모리 맵핑 테이블이 꽉차면 페이지 교체 알고리즘에 의해 특정 페이지가 스왑 디바이스로 내쳐진다.</li>
+</ul>
+<h2>가상</h2>
+<ul>
+<li>OS, SW 는 하드웨어를 가상화한다.</li>
+<li>그 이유는 논리적인 솔루션을 적용하여 자원을 효율적으로 관리 및 활용을 할 수 있기 때문이다.</li>
+</ul>
+<h2>부트</h2>
+<ul>
+<li>전원을 넣으면 ROM 에 있는 BIOS 가 특정 스토리지의 부트로더를 읽는다.<br />ROM 은 펌웨어로, 반영구적이다.</li>
+<li>부트 로더가 부트 코드를 불러 들인다.</li>
+<li>스토리지의 커널 이미지를 메모리에 올린다.</li>
+<li>적절한 설명</li>
+</ul>
+<figure id="og_1606819787146" contenteditable="false" data-ke-type="opengraph" data-og-type="article" data-og-title="부트로더에 대한 이해" data-og-description="부트로더에 대한 이해를 돕기 위해 먼저 컴퓨터 부팅에 대해 설명해보겠다. 00.&nbsp;컴퓨터 부팅 부팅이란 PC가 켜진 후에 운영체제(이하 OS)가 실행 되기 전까지 수행되는 일련의 작업 과정을 말한다" data-og-host="heeyamsec.tistory.com" data-og-source-url="https://heeyamsec.tistory.com/19" data-og-url="https://heeyamsec.tistory.com/19" data-og-image="https://scrap.kakaocdn.net/dn/er0H0F/hyIrnXRZhP/6ZTdzVgeqeysKY9t1eTMY0/img.png?width=634&amp;height=73&amp;face=0_0_634_73,https://scrap.kakaocdn.net/dn/fj8iu/hyIrp2rSji/p7bPXuqTdOioQ2nBSvjMVK/img.png?width=634&amp;height=73&amp;face=0_0_634_73,https://scrap.kakaocdn.net/dn/b2V5Hy/hyIrCOfSEk/YK80cVrbqb03gbRIuAZB00/img.png?width=780&amp;height=414&amp;face=0_0_780_414"><a href="https://heeyamsec.tistory.com/19" target="_blank" rel="noopener" data-source-url="https://heeyamsec.tistory.com/19">
+<div class="og-image" style="background-image: url('https://scrap.kakaocdn.net/dn/er0H0F/hyIrnXRZhP/6ZTdzVgeqeysKY9t1eTMY0/img.png?width=634&amp;height=73&amp;face=0_0_634_73,https://scrap.kakaocdn.net/dn/fj8iu/hyIrp2rSji/p7bPXuqTdOioQ2nBSvjMVK/img.png?width=634&amp;height=73&amp;face=0_0_634_73,https://scrap.kakaocdn.net/dn/b2V5Hy/hyIrCOfSEk/YK80cVrbqb03gbRIuAZB00/img.png?width=780&amp;height=414&amp;face=0_0_780_414');">&nbsp;</div>
+<div class="og-text">
+<p class="og-title">부트로더에 대한 이해</p>
+<p class="og-desc">부트로더에 대한 이해를 돕기 위해 먼저 컴퓨터 부팅에 대해 설명해보겠다. 00.&nbsp;컴퓨터 부팅 부팅이란 PC가 켜진 후에 운영체제(이하 OS)가 실행 되기 전까지 수행되는 일련의 작업 과정을 말한다</p>
+<p class="og-host">heeyamsec.tistory.com</p>
+</div>
+</a></figure>
+<p>&nbsp;</p>

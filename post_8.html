@@ -1,0 +1,54 @@
+<h2>출처</h2>
+<p>프로그래머스, 2018 카카오 블라인드 채용 1차 문제</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 1</p>
+<h2>유형</h2>
+<p>단순 구현</p>
+<h2>특이사항</h2>
+<p>2 차원 리스트 초기화<br>이진화, 지도합성의 2 단계로 나눔.<br>조건에 의해 논리 연산 적용<br>문자열 합치기 연산</p>
+<h2>총평</h2>
+<p>문제가 2 단계라 겁먹을 수도 있음.<br>빨리 지면에 풀어봐야함.</p>
+<pre><code>def decode(n, num):
+    original = [0] * n
+
+    i = n - 1
+    while num &gt;= 1:
+        original[i] = num % 2
+        num = num // 2
+        i -= 1
+    return original
+
+def solution(n, arr1, arr2):
+    answer = []
+
+    # 지도 초기화
+    map_1 = [[0] *n for _ in range(n)]
+    map_2 = [[0] *n for _ in range(n)]
+    map_target = [[0] *n for _ in range(n)]
+
+    # 지도 1 해석
+    i = 0
+    for num in arr1:
+        map_1[i] = decode(n, num)
+        i += 1
+
+    i = 0
+    # 지도 2 해석
+    for num in arr2:
+        map_2[i] = decode(n, num)
+        i += 1
+
+    # 지도 합성 및 문자 변환
+    for r in range(n):
+        word = &#39;&#39;
+        for c in range(n):
+            #map_target[r][c] = map_1[r][c] or map_2[r][c]
+            result = map_1[r][c] or map_2[r][c]
+            if result == 1:
+                word += &#39;#&#39;
+            else:
+                word += &#39; &#39;
+        answer.append(word)
+    # 지도 문자 변환
+
+    return answer</code></pre>

@@ -1,0 +1,36 @@
+<h1>소수 판별하기</h1>
+<p>prime number 구하는 효율적인 방법.</p>
+<h2>숫자 하나 판별 하기</h2>
+<ul>
+<li>개념<br>어떤 수의 제곱근 만큼 루프를 돌며 나누어 떨어지는지 확인한다.<br>주의할 것은 3 이하의 수를 잘 처리해줘야한다는 것임.</li>
+<li>비고<br>숫자 하나 판단하는데 시간 복잡도는 $O(N^{1/2})$ 이다.</li>
+</ul>
+<pre><code>def is_prime(n):
+    if n &lt;= 3:
+        return True
+    for i in range(2, int(n ** .5)+1):
+        if n % i == 0:
+            return False
+    return True
+is_prime(7)</code></pre><h2>에라토스테네스의 체</h2>
+<ul>
+<li>개념<br>소수 여부를 판별하고자 하는 최대 크기 숫자만큼 미리 소수를 다 구해놓는 방법이다.<br>미리 만들어진 배열에 작은 수 부터 루프를 돌며 배수들을 하나씩 지워나가는 방식이다.</li>
+<li>비고<br>2 중 루프를 돌면서 확인하는데 중요한 것은 배수만큼 건너뛰며 체크한다는 점이다.<br>배수만큼 건너뛰면 2 중 루프임에도 불구하고 범위내 모든 소수를 구하는데 시간 복잡도가 $O(N)$ 밖에 되지 않는다.<br>왠만한 크기의 수이면 그냥 이 방법을 쓰는게 가장 좋다.</li>
+</ul>
+<pre><code># 에라토스 테네스 체
+def erathos(n):
+    sieve = [True] * (n + 1)
+    prime = []
+    for i in range(2, n+1):
+        if not sieve[i]:
+            continue
+        for j in range(i+i, n+1, i):
+            sieve[j] = False
+
+    return sieve
+
+res = erathos(1000001)
+
+for idx, prime in enumerate(res):
+    if prime:
+        print(idx,end=&#39; &#39;)</code></pre>

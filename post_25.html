@@ -1,0 +1,74 @@
+<h2>출처</h2>
+<p>프로그래머스, 2020 카카오 블라인드 채용 문제</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>단순 구현<br>시뮬레이션<br>스택</p>
+<h2>특이사항</h2>
+<p>스택, 재귀, 문자열 다루기 등 나름 종합적인 문제.<br>괄호를 뒤집는 것과 리스트를 역순으로 만드는것은 엄연히 로직상 다른것인데 같다고 착각함.</p>
+<h2>총평</h2>
+<p>순서에 맞게 하라는대로 하는 구현 문제임.<br>재귀, 스택, 문자열을 섞어서 난이도가 어렵게 다가올 수 있음.<br>올바른 문자열 찾는 과정을 빠르게 스택으로 구현한것은 잘함.<br>리스트를 거꾸로 출력하는 것은 원소들을 반전시키는것과 전혀 비슷하지 않은 로직이다.</p>
+<pre><code>from collections import deque
+
+def solution(p):
+    answer = &quot;&quot;
+    stack = deque(p)
+
+    # 빈 문자열일 때 바로 반환
+    if p == &#39;&#39;:
+        return p
+
+    # 올바른 문자열 판별
+    alright = True
+    calc = 0
+    while len(stack) &gt; 0:
+        item = stack.popleft()
+        if item == &#39;(&#39;:
+            calc += 1
+        else:
+            calc -= 1
+
+        # 짝이 맞지 않으면 올바르지 않음.
+        if calc &lt; 0:
+            alright = False
+
+    # 올바른 문자열이면 바로 반환
+    if alright:
+        return p
+
+    # 전체가 올바른 문자열이 아니라면, u 와 v 로 나누는 작업 수행
+    left = 0
+    right = 0
+    u = &#39;&#39;
+    v = &#39;&#39;
+
+    for idx, b in enumerate(p):
+        if b == &#39;(&#39;:
+            left += 1
+        else:
+            right += 1
+
+        # 괄호 갯수가 맞으면 균형잡힌 문자열이다. u 와 v 로 나누고 루프를 종료한다.
+        if left == right:
+            u = p[ : idx + 1]
+            v = p[idx + 1 : ]
+            break
+
+    # u 의 첫 괄호가 ( 이면 u 는 올바른 문자열이다. v 를 처음부터 재귀적으로 돌린것을 u 에 추가한 후 반환한다.
+    if u[0] == &#39;(&#39;:
+        return u + solution(v)
+    # u 가 올바른 문자열이 아니면 추가로 작업해준다.
+    else:
+        new_str = &#39;(&#39;
+        new_str += solution(v)
+        new_str += &#39;)&#39;
+        new_u = u[1:-1]
+        app_u = &#39;&#39;
+        for i in new_u:
+            if i == &#39;(&#39;:
+                app_u += &#39;)&#39;
+            else:
+                app_u += &#39;(&#39;
+
+        new_str += app_u#new_u[::-1]
+        return new_str</code></pre>

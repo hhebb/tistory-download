@@ -1,0 +1,42 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>시뮬레이션</p>
+<h2>특이사항</h2>
+<p>2 차원 배열을 다뤄야 함.<br>지면에 먼저 풀어봐야 함.<br>인덱스 설정 잘해야 함.</p>
+<h2>총평</h2>
+<p>전형적인 매트릭스 + 구현 문제.<br>아이디어는 빨리 캐치하는데, 배열의 인덱스 때문에 디버깅이 오래 걸림.<br>반복문과 배열에서 인덱스에 따라 순서를 빨리 따라간다면 관련 문제를 모두 빨리 해결할 수 있을듯.</p>
+<pre><code>def solution(n):
+    answer = []
+    rows = [[] for i in range(n + 1)]
+
+    state = 1
+    phase = 0
+    num = 0
+    remain_dist = int(n * (n + 1) / 2)
+    for dist in range(n, 0, -1):
+        if state == 1:
+            for d in range(1, dist + 1):
+                num += 1
+                rows[2*phase + d].insert(phase, num)
+
+            state = 2
+        elif state == 2:
+            for d in range(1, dist + 1):
+                num += 1
+                rows[n - phase].insert(d + phase, num)
+
+            state = 3
+        else:
+            for d in range(1, dist + 1):
+                num += 1
+                rows[n - phase - d].insert(phase + 1, num)
+
+            state = 1
+            phase += 1
+    for row in rows[1:]:
+        for num in row:
+            answer.append(num)
+    return answer</code></pre>

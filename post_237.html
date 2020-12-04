@@ -1,0 +1,98 @@
+<h1>개인 서버</h1>
+<ul>
+<li>개인용 서버를 위한 준비 작업</li>
+<li>개인적으로 아래의 블로그를 많이 참조했다.</li>
+</ul>
+<figure id="og_1606053010290" contenteditable="false" data-ke-type="opengraph" data-og-type="website" data-og-title="Study For Us" data-og-description="개인 서버 및 네트워크 환경 구축에 대해 이해하기 쉽게 설명하는 블로그 입니다." data-og-host="studyforus.tistory.com" data-og-source-url="https://studyforus.tistory.com/" data-og-url="https://studyforus.tistory.com" data-og-image="https://scrap.kakaocdn.net/dn/Fr1e6/hyIkDUviSV/hqpAFLo2ik6tcZIwgp3j20/img.png?width=180&amp;height=180&amp;face=0_0_180_180,https://scrap.kakaocdn.net/dn/b7deCY/hyIkwA4wpY/F1yaIZmTAI0HDkT8uelrP1/img.png?width=180&amp;height=180&amp;face=0_0_180_180"><a href="https://studyforus.tistory.com/" target="_blank" rel="noopener" data-source-url="https://studyforus.tistory.com/">
+<div class="og-image" style="background-image: url('https://scrap.kakaocdn.net/dn/Fr1e6/hyIkDUviSV/hqpAFLo2ik6tcZIwgp3j20/img.png?width=180&amp;height=180&amp;face=0_0_180_180,https://scrap.kakaocdn.net/dn/b7deCY/hyIkwA4wpY/F1yaIZmTAI0HDkT8uelrP1/img.png?width=180&amp;height=180&amp;face=0_0_180_180');">&nbsp;</div>
+<div class="og-text">
+<p class="og-title">Study For Us</p>
+<p class="og-desc">개인 서버 및 네트워크 환경 구축에 대해 이해하기 쉽게 설명하는 블로그 입니다.</p>
+<p class="og-host">studyforus.tistory.com</p>
+</div>
+</a></figure>
+<h2>&nbsp;</h2>
+<h2>개인 서버</h2>
+<ul>
+<li>클라우드가 아닌 자신의 물리적인 서버를 가지고 싶을 때.</li>
+<li>자신의 컴퓨터나 핸드폰 또는 태블릿 (os 가 있는 장비는 거의 다 된다)</li>
+<li>각자의 웹 앱을 개발하여 80 번 포트를 사용하여 앱을 구동시킨다.
+<ul>
+<li>브라우저는 포트를 명시하지 않으면 기본적으로 서버의 80 번 포트로 접속한다.</li>
+</ul>
+</li>
+</ul>
+<h2>네트워크 설정</h2>
+<ul>
+<li>공인 IP 를 가진 선을 그대로 꽂아서 사용한다면 별도의 설정이 필요없다.</li>
+<li>하지만 공유기를 사용하는 LAN 환경이거나, eth 가 아닌 모바일 링크를 사용할 때는 별도의 설정이 필요하다.
+<ul>
+<li>공유기가 부여하는 내부 IP 는 고유하지 않으며 또 보통 2 시간 마다 바뀌기 때문이다.</li>
+<li>모바일 네트워크는 유선 인터넷과 근본이 다른데 일반적으로 유동적이기 때문이다.</li>
+</ul>
+</li>
+<li>공유기를 사용할 때 대부분 iptime 을 사용하는데 iptime 관리자 페이지에서 다양한 설정을 할 수 있다.
+<ul>
+<li>공유기는 의외로 하는 일이 많은 스마트 장비다.</li>
+<li>네트워크 관점에서는 애매한 존재.</li>
+<li>네트워크 계층을 넘나들며 다양한 일을 처리한다.(방화벽, 라우팅, DHCP, 포워딩 등)</li>
+</ul>
+</li>
+<li>먼저 일정 시간마다 변경되는 IP 를 고정시켜야 한다.
+<ul>
+<li>공유기는 대부분 xxx.1 번 주소를 가진다.</li>
+<li>유저 디바이스의 MAC 주소를 특정 내부 ip 주소와 매핑시킨다.</li>
+</ul>
+</li>
+<li>그리고 포트포워딩 / DMZ / TwinIP 를 설정한다.
+<ul>
+<li>포트포워딩은 내부로 들어오는 데이터의 내부 ip 와 포트 번호를 내부 유저의 포트에 매칭시켜 주는 것이다.</li>
+<li>포트포워딩을 통해 웹서버를 구동할 수 있게 된다.</li>
+<li>물론 IP 는 공인 IP 로 인식된다.</li>
+<li>DMZ 는 특정 디바이스의 모든 포트를 개방하여 매핑한다? 라는 개념인데 이부분은 잘 모르겠으니 패스</li>
+<li>트윈 IP 는 특정 디바이스를 공인 IP 로 인식하게 한다.</li>
+<li>공인 IP 를 2 개가 가지는 효과를 보인다하여 트윈이라고 하는듯히다.</li>
+<li>당연히 os 에서는 내부 ip 로 인식하고 공유기 외부에서부터 이 디바이스를 공인 IP 로 인식한다.</li>
+</ul>
+</li>
+</ul>
+<h2>도메인</h2>
+<ul>
+<li>웹서버가 있으면 도메인을 준비해야 한다.</li>
+<li>최상위 도메인은 보통 유료다.
+<ul>
+<li>국가 도메인, 글로벌 도메인</li>
+<li>.com, .net, .org, .co.kr, .us 등</li>
+</ul>
+</li>
+<li>하지만 무료 도메인도 많다.
+<ul>
+<li>2 차 도메인</li>
+<li>아프리카 등의 국가 도메인</li>
+</ul>
+</li>
+<li>dns 는 domain name service 다.
+<ul>
+<li>도메인의 성격은 record 로 나눌 수 있다.</li>
+<li>a 레코드 - 가장 일반적. 네이버 카페 같은 하위 도메인을 만들 수 있음.</li>
+<li>ddns 레코드 - 유동 ip 를 도메인에 연결할 수 있음.</li>
+<li>웹 포워딩 - 웹 주소를 포워딩함. 예를 들어 기존의 티스토리 도메인을 다른걸로 바꾸고 싶을 때.</li>
+</ul>
+</li>
+<li>freenom 사이트에서 도메인 서비스를 신청할 수 있다.</li>
+<li>여기서는 무료 최상위 국가 도메인을 획득할 수 있다.</li>
+<li>domain name 서버도 필요하다.
+<ul>
+<li>이 서버가 없으면 ip 주소를 쳐야만 본인의 서버로 찾아올 수 있다.</li>
+<li>기본값으로 freenom 의 DN 서버가 지정되어 있다.</li>
+<li>안타깝게도 국내 DN 서버에는 이 무료 도메인이 거부된다.</li>
+<li>아마도 불법 사이트가 성행할 가능성 때문인듯 하다.</li>
+</ul>
+</li>
+</ul>
+<h2>서버 구동</h2>
+<ul>
+<li>어쩄든 본인은 아프리카 가봉의 최상위 도메인을 얻어 본인의 공유기에 연결된 컴터로 서버를 구축하여 돌려보았다.</li>
+<li>추후 계획은 공기계 안드로이드 폰에서 서버를 구동하여 개인 블로그를 올릴 예정이다.</li>
+<li>웹이 재밌는 점이 도메인, 네트워크, 백엔드, 프론트엔드 의 집합이지만 모듈식으로 되어있어 각 부분은 마음대로 교체시켜버려도 구동이 된다는 것이다.</li>
+</ul>

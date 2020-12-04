@@ -1,0 +1,52 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2, 카카오 2018 블라인드 채용 3 차 문제</p>
+<h2>유형</h2>
+<p>진법 변환<br>구현</p>
+<h2>특이사항</h2>
+<p>카카오 문제 중 가장 쉬운 편.<br>진법변환</p>
+<h2>총평</h2>
+<p>로직의 단계가 나뉘어져 있지만 하나하나가 난이도가 높지 않아서 전체적으로 평이했다.</p>
+<pre><code>def solution(n, t, m, p):
+    answer = &#39;&#39;
+    tubes = []
+    order = 0
+    num = 0
+    match = {10:&#39;A&#39;, 11:&#39;B&#39;, 12:&#39;C&#39;, 13:&#39;D&#39;, 14:&#39;E&#39;, 15:&#39;F&#39;}
+
+    while len(tubes) &lt; t:
+
+        num_copy = num
+        tmp_res = &#39;&#39;
+        while num_copy &gt;= n:
+            add_num = num_copy % n
+            if add_num &gt;= 10:
+                add_num = match[add_num]
+            else:
+                add_num = str(add_num)
+            tmp_res = add_num + tmp_res
+            num_copy = num_copy // n
+            #print(num_copy)
+        if num_copy != 0:
+            add_num = num_copy % n
+            if add_num &gt;= 10:
+                add_num = match[add_num]
+            else:
+                add_num = str(add_num)
+            tmp_res = add_num + tmp_res
+
+        if num == 0:
+            tmp_res = &#39;0&#39;
+
+        for tmp in tmp_res:
+            #print(order, tmp)
+            if order % m == p - 1:
+                tubes.append(tmp)
+            order += 1
+
+        num += 1
+
+    tubes = tubes[:t]
+    answer = &#39;&#39;.join(tubes)
+    return answer</code></pre>

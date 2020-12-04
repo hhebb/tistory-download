@@ -1,0 +1,47 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>단순 구현<br>큐</p>
+<h2>특이사항</h2>
+<p>시퀀스 자료(큐) 사용<br>enqueue, dequeue 를 상황에 따라 사용.</p>
+<h2>총평</h2>
+<p>어려움 없이 해결.<br>큐의 활용도가 높아짐.<br>큐의 기능을 잘 사용함.<br>큐를 2 개 만들었는데 그럴 필요 없이 튜플에다 값을 2 개 넣고 하나의 큐에 집어넣어도 된다.</p>
+<pre><code>from collections import deque
+
+def solution(progresses, speeds):
+    answer = []
+
+    # 큐 생성 할당
+    q_wait = deque(progresses)
+    q_speeds = deque(speeds)
+
+    # 모든 작업 다 끝낼때까지
+    while len(q_wait) &gt; 0:
+        for idx, work in enumerate(q_wait):
+            # 작업 진행
+            q_wait[idx] += q_speeds[idx]
+
+        # 맨 앞의 작업이 완료되었을 때
+        if q_wait[0] &gt;= 100:
+            release_count = 1
+            for idx, work in enumerate(q_wait):
+                # 자기자신 패스
+                if idx == 0:
+                    continue
+                # 미리 완료되었거나 함께 완료된 뒷작업들이 있으면 배포카운트 올려줌
+                if q_wait[idx] &gt;= 100:
+                    release_count += 1
+                # 완료되지 않으면 이후로는 검사를 하지않으므로 루프 종료
+                else:
+                    break
+            # 완료된 작업 수만큼 dequeue 한다.
+            for i in range(release_count):
+                q_wait.popleft()
+                q_speeds.popleft()
+
+            # answer 추가
+            answer.append(release_count)
+
+    return answer</code></pre>

@@ -1,0 +1,77 @@
+<h2>출처</h2>
+<p>프로그래머스</p>
+<h2>난이도</h2>
+<p>프로그래머스 level 2</p>
+<h2>유형</h2>
+<p>그리디 알고리즘</p>
+<h2>특이사항</h2>
+<p>그리디 알고리즘 적용처를 파악해야 함.<br>둘 중 하나를 선택하는 전형적인 비선형 문제로 볼 수도 있다.</p>
+<h2>총평</h2>
+<p>아이디어는 금방 캐치함.<br>파이썬은 컴파일에러가 안뜨므로 오타가 났을 때 못잡을 수도 있음.<br>이 문제도 오타때문에 런타임 에러 떴는데, 인덱스 관련 에러인줄 알고 한참 헤맴.<br>다른 사람이 만든 테스트케이스 집어넣어보니 오타난것을 알 수 있었음.<br>런타임 에러 시 오타여부도 확인해야함.</p>
+<pre><code>def solution(name):
+    answer = 0
+
+    current_input = &#39;A&#39; * len(name)
+    current_pos = 0
+    completed = [False] * len(name)
+
+    # 처음에 A 인 문자 완성으로 바꾸기
+    for idx, c in enumerate(current_input):
+        if c == name[idx]:
+            completed[idx] = True
+
+    while True:
+        # 오른쪽으로 얼마나 가야하는지 계산
+        dist_right = 0
+        targe_pos_right = current_pos
+        for pos in range(len(name)):
+            if current_pos + pos &gt; len(name) - 1:
+                if completed[current_pos + pos - len(name)]:
+                    dist_right += 1
+                else:
+                    target_pos_right = current_pos + pos - len(name)
+                    break
+            else:
+                if completed[current_pos + pos]:
+                    dist_right += 1
+                else:
+                    target_pos_right = current_pos + pos
+                    break
+
+        # 왼쪽으로 얼마나 가야하는지 계산
+        dist_left = 0
+        targe_pos_right = current_pos
+        for pos in range(len(name)):
+            if current_pos - pos &lt; 0:
+                if completed[current_pos - pos + len(name)]:
+                    dist_left += 1
+                else:
+                    target_pos_left = current_pos - pos + len(name)
+                    break
+            else:
+                if completed[current_pos - pos]:
+                    dist_left += 1
+                else:
+                    target_pos_left = current_pos - pos
+                    break
+
+        # 모든 문자가 완성되면 종료
+        if dist_right == len(name):
+            break
+
+        # 오른쪽으로 거리가 더 멀면 왼쪽으로 이동
+        if dist_right &gt; dist_left:
+            answer += dist_left
+            current_pos = target_pos_left
+        else:
+            answer += dist_right
+            current_pos = target_pos_right
+
+        name_char = ord(name[current_pos])
+        if name_char - 65 &gt; 13:
+            answer += (26 + 65 - name_char)
+        else:
+            answer += (name_char - 65)
+
+        completed[current_pos] = True
+    return answer</code></pre>
