@@ -3,7 +3,7 @@ import json
 import webbrowser
 import requests
 import sys
-
+import time
     
 # 로그인
 def login(url='/oauth/authorize'):
@@ -58,6 +58,7 @@ def read_post(url='/apis/post/read', token=None):
     res = res.json()
     document = res['tistory']['item']
     document['categoryId'], document['content'], document['title']
+
     
 if __name__ == "__main__":
     # 정보 로드
@@ -67,9 +68,16 @@ if __name__ == "__main__":
     
     
     login()
-    code = input()
+    code = sys.stdin.readline().strip()
     token = get_token(code=code)
     
     category_list = get_categories(token=token)
-    print(category_list)
+    #print(category_list)
     
+    print('wanna download?: ', flush=True)
+    ans = sys.stdin.readline().strip()
+    
+    if ans == 'y':
+        print('downloading...')
+    else:
+        pass
